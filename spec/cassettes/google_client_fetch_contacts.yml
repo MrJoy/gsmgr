@@ -1,0 +1,213 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://people.googleapis.com/v1/people/me/connections?pageSize=100&personFields=emailAddresses,names
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - unknown/0.0.0 google-apis-people_v1/0.35.0 Mac OS X/12.6.3 (gzip)
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Tue, 21 Feb 2023 23:34:24 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/3.1.3 gdcl/1.35.0
+      Authorization:
+      - Bearer ya29.blah-blah-meh_meh_meh_meh-blah
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Content-Encoding:
+      - gzip
+      Date:
+      - Tue, 21 Feb 2023 23:34:24 GMT
+      Server:
+      - ESF
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "connections": [
+            {
+              "resourceName": "people/c2135938136224466463",
+              "etag": "%EggBAgcJLjc9PhoEAQIFByIMeU5kekNCaklXSVk9",
+              "names": [
+                {
+                  "metadata": {
+                    "primary": true,
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "1da4606b0fde861f"
+                    }
+                  },
+                  "displayName": "Marilyn Smith",
+                  "familyName": "Smith",
+                  "givenName": "Marilyn",
+                  "displayNameLastFirst": "Smith, Marilyn",
+                  "unstructuredName": "Marilyn Smith"
+                }
+              ],
+              "emailAddresses": [
+                {
+                  "metadata": {
+                    "primary": true,
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "1da4606b0fde861f"
+                    }
+                  },
+                  "value": "msmith@mac.com",
+                  "type": "home",
+                  "formattedType": "Home"
+                },
+                {
+                  "metadata": {
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "1da4606b0fde861f"
+                    }
+                  },
+                  "value": "msmith@me.com",
+                  "type": "other",
+                  "formattedType": "Other"
+                }
+              ]
+            },
+            {
+              "resourceName": "people/c1597419354734556943",
+              "etag": "%EggBAgcJLjc9PhoEAQIFByIMdWdPTTNkeGxwcWM9",
+              "names": [
+                {
+                  "metadata": {
+                    "primary": true,
+                    "source": {
+                      "type": "PROFILE",
+                      "id": "101311073836012420713"
+                    },
+                    "sourcePrimary": true
+                  },
+                  "displayName": "Mr. Jon David Smith Esquire",
+                  "familyName": "Smith",
+                  "givenName": "Jon",
+                  "middleName": "David",
+                  "honorificPrefix": "Mr.",
+                  "honorificSuffix": "Esquire",
+                  "displayNameLastFirst": "Smith, Mr. Jon David, Esquire",
+                  "unstructuredName": "Mr. Jon David Smith Esquire"
+                }
+              ],
+              "emailAddresses": [
+                {
+                  "metadata": {
+                    "primary": true,
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "162b2c708c49770f"
+                    },
+                    "sourcePrimary": true
+                  },
+                  "value": "sciandu@gmail.com",
+                  "type": "other",
+                  "formattedType": "Other"
+                },
+                {
+                  "metadata": {
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "162b2c708c49770f"
+                    }
+                  },
+                  "value": "jsmith@mrsmith.com",
+                  "type": "home",
+                  "formattedType": "Home"
+                },
+                {
+                  "metadata": {
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "162b2c708c49770f"
+                    }
+                  },
+                  "value": "jsmith@me.com",
+                  "type": "home",
+                  "formattedType": "Home"
+                },
+                {
+                  "metadata": {
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "162b2c708c49770f"
+                    }
+                  },
+                  "value": "jsmith@mac.com",
+                  "type": "home",
+                  "formattedType": "Home"
+                },
+                {
+                  "metadata": {
+                    "source": {
+                      "type": "CONTACT",
+                      "id": "162b2c708c49770f"
+                    }
+                  },
+                  "value": "jsmith@icloud.com",
+                  "type": "home",
+                  "formattedType": "Home"
+                },
+                {
+                  "metadata": {
+                    "verified": true,
+                    "source": {
+                      "type": "ACCOUNT",
+                      "id": "101311073836012420713"
+                    },
+                    "sourcePrimary": true
+                  },
+                  "value": "sciandu@gmail.com"
+                },
+                {
+                  "metadata": {
+                    "verified": true,
+                    "source": {
+                      "type": "ACCOUNT",
+                      "id": "101311073836012420713"
+                    }
+                  },
+                  "value": "jsmith@me.com"
+                }
+              ]
+            }
+          ],
+          "nextPageToken": null,
+          "totalPeople": 2,
+          "totalItems": 2
+        }
+  recorded_at: Tue, 24 Jan 2023 20:20:53 GMT
+recorded_with: VCR 6.1.0

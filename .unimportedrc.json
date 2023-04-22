@@ -1,0 +1,28 @@
+{
+    "entry": [
+        "app/javascript/**/*"
+    ],
+    "ignorePatterns": [
+        "*.config.js",
+        "**/*.d.ts",
+        "**/node_modules/**",
+        "app/javascript/vendor/**/*",
+        "coverage/**"
+    ],
+    "ignoreUnimported": [
+      "app/assets/builds/**/*"
+    ],
+    "ignoreUnused": [
+        "esbuild",
+        "eslint-config-airbnb",
+        "eslint-config-standard-with-typescript",
+        "eslint-import-resolver-typescript",
+        "eslint-plugin-no-unsanitized",
+        "eslint-plugin-security",
+        "postcss-scss",
+        "sass",
+        "stylelint-config-standard",
+        "unimported"
+    ],
+    "ignoreUnresolved": []
+}

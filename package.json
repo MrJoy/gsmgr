@@ -1,0 +1,35 @@
+{
+  "name": "core",
+  "private": "true",
+  "scripts": {
+    "build:js:dev": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds --public-path=assets --minify",
+    "build:css:dev": "sass ./app/assets/stylesheets/entrypoints:./app/assets/builds --quiet-deps --source-map --load-path=./node_modules",
+    "build:css": "sass ./app/assets/stylesheets/entrypoints:./app/assets/builds --no-source-map --load-path=./node_modules",
+    "lint:js": "eslint \"app/javascript/**/*.{ts,tsx,js,jsx}\" --report-unused-disable-directives",
+    "lint:css": "stylelint --config ./stylelint.config.js \"./app/assets/stylesheets/**/*.{css,scss}\"",
+    "lint:unused": "unimported",
+    "lint:audit": "yarn audit --groups dependencies",
+    "lint": "yarn lint:js && yarn lint:css && yarn lint:unused && yarn lint:audit"
+  },
+  "dependencies": {
+    "@rails/ujs": "^7.0.3-1",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "esbuild": "^0.17.0",
+    "eslint": "^8.0.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-import-resolver-typescript": "^3.4.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-no-unsanitized": "^4.0.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-security": "^1.4.0",
+    "postcss-scss": "^4.0.5",
+    "sass": "^1.52.0",
+    "stylelint": "^15.0.0",
+    "stylelint-config-standard": "^32.0.0",
+    "typescript": "^5.0.2",
+    "unimported": "^1.19.1"
+  }
+}

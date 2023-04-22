@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://people.googleapis.com/v1/people/me?personFields=metadata,emailAddresses
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - unknown/0.0.0 google-api-ruby-client/0.45.0 Mac OS X/10.15.7 (gzip)
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Wed, 08 Jul 2020 22:07:45 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.6.6 gdcl/0.45.0
+      Authorization:
+      - Bearer ya29.blah-blah-meh_meh_meh_meh-blah
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Content-Encoding:
+      - gzip
+      Date:
+      - Wed, 08 Jul 2020 22:07:45 GMT
+      Server:
+      - ESF
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3-Q050=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T051=":443";
+        ma=2592000,h3-T050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443";
+        ma=2592000,quic=":443"; ma=2592000; v="46,43"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "resourceName": "people/101241854727239032273",
+          "etag": "%EgUBCT43LhoEAQIFByIMMmlTVGZvcCtvYlE9",
+          "metadata": {
+            "sources": [
+              {
+                "type": "PROFILE",
+                "id": "101241854727239032273",
+                "etag": "#4eZz2/IuMFw=",
+                "profileMetadata": {
+                  "objectType": "PERSON",
+                  "userTypes": [
+                    "GOOGLE_USER",
+                    "GOOGLE_APPS_USER"
+                  ]
+                }
+              },
+              {
+                "type": "DOMAIN_PROFILE",
+                "id": "101241854727239032273",
+                "etag": "#4eZz2/IuMFw="
+              }
+            ],
+            "objectType": "PERSON"
+          },
+          "emailAddresses": [
+            {
+              "metadata": {
+                "primary": true,
+                "verified": true,
+                "source": {
+                  "type": "DOMAIN_PROFILE",
+                  "id": "101241854727239032273"
+                }
+              },
+              "value": "jon@stuff.work"
+            },
+            {
+              "metadata": {
+                "source": {
+                  "type": "DOMAIN_PROFILE",
+                  "id": "101241854727239032273"
+                }
+              },
+              "value": "jsmith@mrsmith.com",
+              "type": "work",
+              "formattedType": "Work"
+            },
+            {
+              "metadata": {
+                "verified": true,
+                "source": {
+                  "type": "DOMAIN_PROFILE",
+                  "id": "101241854727239032273"
+                }
+              },
+              "value": "jon@someventure.co"
+            }
+          ]
+        }
+  recorded_at: Mon, 28 Sep 2020 22:16:36 GMT
+recorded_with: VCR 6.0.0

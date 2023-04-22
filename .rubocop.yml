@@ -1,0 +1,360 @@
+####################################################################################################
+# Global Config
+####################################################################################################
+# https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+require:
+  - rubocop-capybara
+  - rubocop-eightyfourcodes
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-rubycw
+  - rubocop-thread_safety
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  EnabledByDefault: true
+  Exclude:
+  - bin/**/*
+  - data/**/*
+  - db/schema.rb
+  - node_modules/**/*
+  - notes/**/*
+  - tmp/**/*
+  - vendor/**/*
+
+
+####################################################################################################
+# Layout Cops
+# https://docs.rubocop.org/en/stable/cops_layout/
+####################################################################################################
+Layout/CommentIndentation:
+  Enabled: false
+
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: false
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Layout/LineLength:
+  Max: 100
+  Exclude:
+  - db/migrate/*
+
+Layout/RedundantLineBreak:
+  # We want to allow formatting things for readability.
+  Enabled: false
+
+Layout/SingleLineBlockChain:
+  # At the time of writing (2021-05-07), this rule is producing a lot of noise on code I don't think
+  # benefits from the recommended changes, and the automated fixes are producing code that breaks
+  # other rules, due in no small part to bugs.  E.G. continuing a statement on the next line but
+  # _not indenting it at all_.
+  Enabled: false
+
+####################################################################################################
+# Lint Cops
+# https://docs.rubocop.org/en/stable/cops_lint/
+####################################################################################################
+Lint/ConstantResolution:
+  Enabled: false
+
+Lint/NumberConversion:
+  Exclude:
+  - config/*
+  - config/**/*
+
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+
+
+####################################################################################################
+# Metric Cops
+# https://docs.rubocop.org/en/stable/cops_metrics/
+####################################################################################################
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+  - db/migrate/**/*
+
+Metrics/BlockLength:
+  Exclude:
+  - app/admin/**/*
+  - config/environments/**/*
+  - config/routes.rb
+  - db/migrate/**/*
+  - lib/tasks/**/*
+  - spec/**/*
+  - test/**/*
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 20
+  CountComments: false
+  Exclude:
+  - db/migrate/*
+  - spec/support/**/*
+
+
+####################################################################################################
+# Migration Cops
+# https://docs.rubocop.org/en/stable/cops_migration/
+####################################################################################################
+
+
+####################################################################################################
+# Naming Cops
+# https://docs.rubocop.org/en/stable/cops_naming/
+####################################################################################################
+
+
+####################################################################################################
+# Security Cops
+# https://docs.rubocop.org/en/stable/cops_security/
+####################################################################################################
+
+
+####################################################################################################
+# Style Cops
+# https://docs.rubocop.org/en/stable/cops_style/
+####################################################################################################
+Style/AsciiComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+  - config/application.rb
+
+Style/ConstantVisibility:
+  Enabled: false
+
+Style/CommentedKeyword:
+  Enabled: false
+
+Style/Copyright:
+  Enabled: false
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+  - app/controllers/application_controller.rb
+  - app/helpers/**/*
+  - app/mailers/application_mailer.rb
+  - app/models/application_record.rb
+  - config/application.rb
+  - db/migrate/*
+  - spec/support/**/*
+
+Style/DocumentationMethod:
+  Enabled: false
+
+# I happen to like the truthiness operator (`!!`)...
+Style/DoubleNegation:
+  Enabled: false
+
+Style/FormatString:
+  EnforcedStyle: sprintf
+
+Style/ImplicitRuntimeError:
+  Exclude:
+  - spec/spec_helper.rb
+  - spec/rails_helper.rb
+  - spec/support/*
+
+Style/InlineComment:
+  Enabled: false
+
+Style/MethodCalledOnDoEndBlock:
+  Exclude:
+  - spec/**/*.rb
+
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: require_parentheses
+  AllowedMethods:
+  # Keywords:
+  - exit
+  - puts
+  - raise
+  - require
+  - require_relative
+  # Rake:
+  - desc
+  - namespace
+  - task
+  # Brew Bundler
+  - brew
+  - cask
+  - cask_args
+  - mas
+  - tap
+  - whalebrew
+  IncludedMacros:
+  # RSpec:
+  - context
+  - describe
+  - it
+  Exclude:
+  - config/application.rb
+  - config/environments/*
+  - config/puma.rb
+  - db/migrate/*
+  - Gemfile
+
+Style/MissingElse:
+  Enabled: false
+
+Style/OpenStructUse:
+  Exclude:
+  - spec/**/*.rb
+
+Style/RequireOrder:
+  # Disabled because require order can be semantically significant!
+  Enabled: false
+
+Style/SingleLineMethods:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/TopLevelMethodDefinition:
+  # At time of writing, this is choking on basically every line of code.  `require` statements,
+  # assignments to variables -- everything.
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+####################################################################################################
+# Bundler Cops
+# https://docs.rubocop.org/en/stable/cops_bundler/
+####################################################################################################
+Bundler/GemComment:
+  Enabled: false
+
+
+####################################################################################################
+# Gemspec Cops
+# https://docs.rubocop.org/en/stable/cops_gemspec/
+####################################################################################################
+
+
+####################################################################################################
+# Thread Safety Cops
+# https://github.com/covermymeds/rubocop-thread_safety/tree/master/lib/rubocop/cop/thread_safety
+####################################################################################################
+
+
+####################################################################################################
+# Rails Cops
+# https://docs.rubocop.org/projects/rspec/en/latest/cops_rails/
+####################################################################################################
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Rails/I18nLocaleTexts:
+  Exclude:
+  - app/admin/**/*.rb
+
+Rails/OrderById:
+  Enabled: false
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Rails/SchemaComment:
+  Enabled: false
+
+# Strictly speaking, the right way to normalize schema to allow for absence-of-information for a
+# field is to have an association table and not populate a record for it if the information is
+# absent.  That, however, adds a lot of complexity.  We're disabling this because we have legitimate
+# situations where we want to differentiate between "user did not make a choice", and
+# "user chose false".  Notably with various settings.
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+
+Rails/TransactionExitStatement:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - docker
+    - prod
+    - stage
+    - test
+
+
+####################################################################################################
+# Performance Cops
+# https://docs.rubocop.org/projects/performance/en/stable/cops_performance/
+####################################################################################################
+Performance/OpenStruct:
+  Exclude:
+  - spec/**/*
+
+
+####################################################################################################
+# RSpec Cops
+# https://docs.rubocop.org/projects/rspec/en/latest/cops_rspec/
+####################################################################################################
+RSpec/AlignLeftLetBrace:
+  Enabled: true
+
+RSpec/AlignRightLetBrace:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: true
+  CustomTransform:
+    # N.B. This is here because RSpec doesn't use the Rails inflector.
+    GSuite: gsuite
+    GMail: gmail
+
+RSpec/MessageChain:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+
+####################################################################################################
+# FactoryBot Cops (Part of RSpec Plugin)
+# https://docs.rubocop.org/projects/rspec/en/latest/cops_factorybot/
+####################################################################################################
+
+
+####################################################################################################
+# Rake Cops
+# https://github.com/rubocop-hq/rubocop-rake/tree/master/lib/rubocop/cop/rake
+####################################################################################################
+Rake/Desc:
+  Enabled: false

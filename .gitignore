@@ -1,0 +1,49 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+/public/assets
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# dotenv
+.env
+.env.local
+.env.*.local
+
+# *.rbc
+# capybara-*.html
+# /public/system
+/coverage/
+/notes
+# /spec/tmp
+# *.orig
+# rerun.txt
+# pickle-email-*.html
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore generated files
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+erd.pdf
+
+# Ignore Google credentials
+.credentials.json
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

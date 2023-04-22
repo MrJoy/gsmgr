@@ -1,0 +1,26 @@
+# See https://git-scm.com/docs/gitattributes for more about git attribute files.
+
+# Mark the database schema as having been generated.
+db/schema.rb linguist-generated
+
+# Mark any vendored files as having been vendored.
+vendor/* linguist-vendored
+
+*.rb diff=ruby eol=lf
+*.rake diff=ruby eol=lf
+
+*.js diff=javascript eol=lf
+*.jsx diff=javascript eol=lf
+
+*.sh diff=bash eol=lf
+
+*.yml diff=yaml eol=lf
+
+*.md diff=markdown eol=lf
+
+*.env eol=lf
+*.lock eol=lf
+*.local eol=lf
+*.development eol=lf
+*.docker eol=lf
+*.test eol=lf

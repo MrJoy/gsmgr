@@ -1,0 +1,75 @@
+exclude:
+  - vendor/**/*
+
+linters:
+  AlignmentTabs:
+    enabled: true
+  AltText:
+    enabled: true
+  ClassAttributeWithStaticValue:
+    enabled: true
+  ClassesBeforeIds:
+    enabled: true
+  ConsecutiveComments:
+    enabled: true
+  ConsecutiveSilentScripts:
+    enabled: true
+  EmptyObjectReference:
+    enabled: true
+  EmptyScript:
+    enabled: true
+  FinalNewline:
+    enabled: true
+  HtmlAttributes:
+    enabled: true
+  IdNames:
+    enabled: true
+  ImplicitDiv:
+    enabled: true
+  Indentation:
+    enabled: true
+  InlineStyles:
+    enabled: true
+  InstanceVariables:
+    # Disabled because we use InheritedResources and don't want to have to override _everything_.
+    enabled: false
+  LeadingCommentSpace:
+    enabled: true
+  LineLength:
+    max: 100
+    enabled: false
+  MultilinePipe:
+    enabled: true
+  MultilineScript:
+    enabled: true
+  ObjectReferenceAttributes:
+    enabled: true
+  RepeatedId:
+    enabled: true
+  RuboCop:
+    # Cops ignored without comment are ignored because trying to disable Rubycw seems to have
+    # opened the floodgate for these cops to run, even though they don't really make sense in the
+    # context of templates.
+    ignored_cops:
+      - Layout/LineLength
+      - Layout/TrailingEmptyLines
+      - Lint/Void
+      - Metrics/BlockLength
+      - Rubycw/Rubycw # This is spitting out _way_ too many false-positives.
+      - Style/FrozenStringLiteralComment
+  RubyComments:
+    enabled: true
+  SpaceBeforeScript:
+    enabled: true
+  SpaceInsideHashAttributes:
+    enabled: true
+  TagName:
+    enabled: true
+  TrailingWhitespace:
+    enabled: true
+  UnnecessaryInterpolation:
+    enabled: true
+  UnnecessaryStringOutput:
+    enabled: true
+  ViewLength:
+    enabled: true

@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  # TODO: Differentiate between Rails and Sidekiq processes, and use an appropriate value.
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 4) %>
+  #port: 5432
+  #schema_search_path: myapp,sharedapp,public # The server defaults to $user,public
+  #min_messages: notice # Defaults to warning. `debug5`..`debug1`,`log`,`notice`,`warning`,`error`,`fatal`,`panic`
+
+development:
+  <<: *default
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("DATABASE_PORT", "5432") %>
+  database: <%= ENV.fetch("DATABASE_NAME", "gsmgr_dev") %>
+  username: <%= ENV.fetch("DATABASE_USERNAME", "") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
+
+test:
+  <<: *default
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("DATABASE_PORT", "5432") %>
+  database: <%= ENV.fetch("DATABASE_NAME", "gsmgr_test") %>
+  username: <%= ENV.fetch("DATABASE_USERNAME", "") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>

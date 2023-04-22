@@ -1,0 +1,13 @@
+---
+github_repo: MrJoy/gsmgr
+quiet: true
+skip_files:
+  - /node_modules/
+enable_checks:
+  - CheckDivideByZero
+  - CheckForceSSL
+  - CheckReverseTabnabbing
+  - CheckSecrets
+  - CheckSymbolDoS
+  - CheckUnscopedFind
+  - CheckWeakHash
