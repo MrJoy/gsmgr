@@ -22,7 +22,8 @@
 class GoogleCalendar < ApplicationRecord
   has_many :calendar_instances,
            class_name: "GoogleCalendarInstance",
-           dependent:  :destroy
+           dependent:  :destroy,
+           inverse_of: :calendar
 
   has_many :accounts,
            class_name: "GoogleAccount",

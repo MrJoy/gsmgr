@@ -31,14 +31,15 @@ class GoogleAccount < ApplicationRecord
            class_name: "GoogleCalendarInstance",
            dependent:  :destroy,
            inverse_of: :account
-  has_many :calendars,
-           class_name: "GoogleCalendar",
-           through:    :calendar_instances,
-           inverse_of: :account
+
   has_many :contacts,
            class_name: "GoogleContact",
            dependent:  :destroy,
            inverse_of: :account
+
+  has_many :calendars,
+           class_name: "GoogleCalendar",
+           through:    :calendar_instances
 
   def self.required_scopes
     %w[

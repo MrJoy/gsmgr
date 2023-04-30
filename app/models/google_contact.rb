@@ -28,6 +28,7 @@ class GoogleContact < ApplicationRecord
   belongs_to :account,
              class_name:  "GoogleAccount",
              foreign_key: :google_account_id,
+             dependent:   :destroy,
              inverse_of:  :contacts
 
   validates :google_id,
