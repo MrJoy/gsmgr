@@ -24,6 +24,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_link_to (1.0.5)
+      actionpack
+      addressable
     activejob (7.0.4.3)
       activesupport (= 7.0.4.3)
       globalid (>= 0.3.6)
@@ -44,6 +47,20 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     attr_extras (7.1.0)
+    avo (2.31.0)
+      actionview (>= 6.0)
+      active_link_to
+      activerecord (>= 6.0)
+      addressable
+      docile
+      dry-initializer
+      httparty
+      inline_svg
+      meta-tags
+      pagy
+      turbo-rails
+      view_component (>= 2.54.0)
+      zeitwerk (>= 2.6.2)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -96,6 +113,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    dry-initializer (3.1.1)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -152,9 +170,15 @@ GEM
       rubocop (>= 0.50.0)
       sysexits (~> 1.1)
     hashdiff (1.0.1)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    inline_svg (1.9.0)
+      activesupport (>= 3.0)
+      nokogiri (>= 1.6)
     jsbundling-rails (1.1.1)
       railties (>= 6.0.0)
     json (2.6.3)
@@ -172,12 +196,15 @@ GEM
       net-smtp
     matrix (0.4.2)
     memoist (0.16.2)
+    meta-tags (2.18.0)
+      actionpack (>= 3.2.0, < 7.1)
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.18.0)
     msgpack (1.7.0)
     multi_json (1.15.0)
+    multi_xml (0.6.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -193,6 +220,7 @@ GEM
       racc (~> 1.4)
     optimist (3.0.1)
     os (1.1.4)
+    pagy (6.0.3)
     parallel (1.22.1)
     parser (3.2.2.0)
       ast (~> 2.4.1)
@@ -212,6 +240,8 @@ GEM
     public_suffix (5.0.1)
     puma (6.2.1)
       nio4r (~> 2.0)
+    pundit (2.3.0)
+      activesupport (>= 3.0.0)
     racc (1.6.2)
     rack (2.2.6.4)
     rack-cors (2.0.1)
@@ -334,12 +364,20 @@ GEM
     timecop (0.9.6)
     timeout (0.3.2)
     trailblazer-option (0.1.2)
+    turbo-rails (1.4.0)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unicode-display_width (2.4.2)
     uniform_notifier (1.16.0)
     vcr (6.1.0)
+    view_component (3.0.0)
+      activesupport (>= 5.2.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -363,6 +401,7 @@ DEPENDENCIES
   activerecord (~> 7.0.3)
   activesupport (~> 7.0.3)
   annotate (~> 3.2.0)
+  avo (~> 2.25)
   better_errors (~> 2.9.1)
   binding_of_caller (~> 1.0)
   bootsnap (>= 1.4.2)
@@ -391,6 +430,7 @@ DEPENDENCIES
   pry
   pry-rails
   puma (~> 6.0)
+  pundit (~> 2.3.0)
   rack-cors (~> 2.0.0)
   rails-controller-testing (~> 1.0.5)
   railties (~> 7.0.3)
