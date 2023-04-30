@@ -3,11 +3,5 @@ github_repo: MrJoy/gsmgr
 quiet: true
 skip_files:
   - /node_modules/
-enable_checks:
-  - CheckDivideByZero
-  - CheckForceSSL
-  - CheckReverseTabnabbing
-  - CheckSecrets
-  - CheckSymbolDoS
-  - CheckUnscopedFind
-  - CheckWeakHash
+skip_checks:
+  - CheckForceSSL # This app is meant to run locally.
