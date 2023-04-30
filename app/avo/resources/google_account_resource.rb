@@ -9,7 +9,12 @@ class GoogleAccountResource < Avo::BaseResource
   self.show_controls =
     lambda do
       back_button
+      action(SyncGoogleCalendars, style: :primary, color: :green)
+      action(SyncGoogleContacts, style: :primary, color: :green)
     end
+
+  action SyncGoogleCalendars
+  action SyncGoogleContacts
 
   MAX_LEN = 50
   fmt_array = ->(val) { val&.join("<br>\n")&.html_safe } # rubocop:disable Rails/OutputSafety
