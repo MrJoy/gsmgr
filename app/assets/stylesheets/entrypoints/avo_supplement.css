@@ -1,0 +1,38 @@
+[data-field-type='number'] {
+  text-align: right;
+}
+
+/* Hide all Show buttons.  If you want to show a record, use `link_to_resource`. */
+a[data-target='control:view'][data-control='show'] {
+  display: none !important;
+}
+
+/* Avo doesn't let us hide controls on the list view / disable actions outright without the
+   complexity of Pundit policies.  So, just hide them. */
+div[data-model-name='GoogleAccount'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleAccount'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleAccount'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleAccount'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}
+
+div[data-model-name='GoogleCalendarInstance'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleCalendarInstance'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleCalendarInstance'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleCalendarInstance'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}
+
+div[data-model-name='GoogleCalendar'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleCalendar'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleCalendar'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleCalendar'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}
+
+div[data-model-name='GoogleContact'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleContact'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleContact'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleContact'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}

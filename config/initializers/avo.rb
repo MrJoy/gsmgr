@@ -45,9 +45,9 @@ Avo.configure do |config|
   # config.resource_controls_placement = :right
   # config.model_resource_mapping = {}
   # config.default_view_type = :table
-  # config.per_page = 24
-  # config.per_page_steps = [12, 24, 48, 72]
-  # config.via_per_page = 8
+  config.per_page = 50
+  config.per_page_steps = [50, 100, 200]
+  config.via_per_page = 25
   # config.id_links_to_resource = false
   # config.cache_resources_on_index_view = true
   ## permanent enable or disable cache_resource_filters, default value is false
@@ -67,7 +67,7 @@ Avo.configure do |config|
   # config.display_license_request_timeout_error = true
   # config.disabled_features = []
   # config.tabs_style = :tabs # can be :tabs or :pills
-  # config.buttons_on_form_footers = true
+  config.buttons_on_form_footers = true
   # config.field_wrapper_layout = true
 
   ## == Branding ==

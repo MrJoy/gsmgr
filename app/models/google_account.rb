@@ -27,9 +27,18 @@ class GoogleAccount < ApplicationRecord
   validates :email, presence: true
   validates :google_id, presence: true, uniqueness: { case_sensitive: false }
 
-  has_many :calendar_instances,  class_name: "GoogleCalendarInstance", dependent: :destroy
-  has_many :calendars,           class_name: "GoogleCalendar",         through: :calendar_instances
-  has_many :contacts,            class_name: "GoogleContact",          dependent: :destroy
+  has_many :calendar_instances,
+           class_name: "GoogleCalendarInstance",
+           dependent:  :destroy,
+           inverse_of: :account
+  has_many :calendars,
+           class_name: "GoogleCalendar",
+           through:    :calendar_instances,
+           inverse_of: :account
+  has_many :contacts,
+           class_name: "GoogleContact",
+           dependent:  :destroy,
+           inverse_of: :account
 
   def self.required_scopes
     %w[

@@ -15,8 +15,8 @@ SRC_URLS = ([:self] + webpack_urls).freeze
 
 FONT_SRC_URLS    = ([:data] + SRC_URLS).freeze
 IMG_SRC_URLS     = ([:data] + SRC_URLS).freeze
-SCRIPT_SRC_URLS  = SRC_URLS
-STYLE_SRC_URLS   = SRC_URLS
+SCRIPT_SRC_URLS  = ([:unsafe_inline] + SRC_URLS).freeze
+STYLE_SRC_URLS   = ([:unsafe_inline] + SRC_URLS).freeze
 CONNECT_SRC_URLS = ([:data] + SRC_URLS).freeze
 
 Rails.application.config.content_security_policy do |policy|
