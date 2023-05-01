@@ -65,7 +65,6 @@ class GoogleCalendarSync
     local_cals_instances =
       account
       .calendar_instances
-      .includes(:calendar)
       .group_by { |inst| inst.calendar.google_id }
     [local_cals, local_cals_instances]
   end
