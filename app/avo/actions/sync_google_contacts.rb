@@ -10,6 +10,10 @@ class SyncGoogleContacts < Avo::BaseAction
     errors = []
     models.each do |model|
       GoogleContactSync.call(model.id)
+      GoogleContactGroupSync.call(model.id)
+      model.contact_groups.each do |group|
+        GoogleContactGroupMembersSync.call(group.id)
+      end
     rescue StandardError => e
       errors << "#{model.id}: #{e.message}"
     end

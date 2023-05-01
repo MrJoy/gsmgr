@@ -22,6 +22,7 @@ class GoogleContactResource < Avo::BaseResource
   field :middle_name,             as: :text, hide_on: %i[index new edit]
   field :family_name,             as: :text, hide_on: %i[index new edit]
 
-  field :account, as: :belongs_to, hide_on: %i[new edit]
-  field :emails,  as: :has_many,   hide_on: %i[new edit]
+  field :account,        as: :belongs_to, hide_on: %i[new edit]
+  field :emails,         as: :has_many,   hide_on: %i[new edit]
+  field :contact_groups, as: :has_many,   hide_on: %i[new edit]
 end

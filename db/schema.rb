@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_214003) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_014511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_214003) do
     t.datetime "updated_at", null: false
     t.string "scopes", default: [], array: true
     t.string "contact_sync_token"
+    t.string "contact_group_sync_token"
     t.index "lower((email)::text) varchar_pattern_ops", name: "index_google_accounts_on_email"
     t.index "lower((google_id)::text) varchar_pattern_ops", name: "unique_google_accounts_idx", unique: true
   end
@@ -50,6 +51,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_214003) do
     t.datetime "updated_at", null: false
     t.index "google_contact_id, lower((email)::text) varchar_pattern_ops", name: "idx_gce_on_google_contact_id_and_email", unique: true
     t.index "lower((email)::text) varchar_pattern_ops", name: "index_google_contact_emails_on_email"
+  end
+
+  create_table "google_contact_groups", force: :cascade do |t|
+    t.bigint "google_account_id", null: false
+    t.string "google_id", null: false
+    t.string "name", null: false
+    t.string "formatted_name", null: false
+    t.string "group_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "google_account_id, lower((google_id)::text) varchar_pattern_ops", name: "index_gcg_on_google_account_id_and_google_id", unique: true
+  end
+
+  create_table "google_contact_groups_contacts", id: false, force: :cascade do |t|
+    t.bigint "google_contact_group_id", null: false
+    t.bigint "google_contact_id", null: false
+    t.index ["google_contact_group_id", "google_contact_id"], name: "idx_gcg_gc_on_gcg_id_and_gc_id", unique: true
+    t.index ["google_contact_id"], name: "idx_gcg_gc_on_gc_id"
   end
 
   create_table "google_contacts", force: :cascade do |t|

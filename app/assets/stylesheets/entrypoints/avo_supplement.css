@@ -36,3 +36,10 @@ div[data-model-name='GoogleContact'] * *[data-target='control:destroy'][data-con
 div[data-model-name='GoogleContact'] * *[data-target='control:detach'][data-control='detach'] {
   display: none !important;
 }
+
+div[data-model-name='GoogleContactGroup'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleContactGroup'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleContactGroup'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleContactGroup'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}

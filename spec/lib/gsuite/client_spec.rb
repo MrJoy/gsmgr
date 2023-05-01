@@ -142,4 +142,87 @@ RSpec.describe(GSuite::Client, type: :lib) do
       end
     end
   end
+
+  describe("#fetch_contact_groups") do
+    subject(:groups) { client.fetch_contact_groups }
+
+    before do
+      Timecop.freeze(Time.zone.local(2020, 7, 8, 15, 0, 6)) if playback?
+    end
+
+    it("returns contact groups for the GSuite account") do
+      VCR.use_cassette("google_client_fetch_contact_groups") do
+        expect(groups)
+          .to(eql([
+                    [
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "2924db450ca4eed7",
+                        name:           "Freeverse",
+                        formatted_name: "Freeverse",
+                        group_type:     "USER_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "chatBuddies",
+                        name:           "chatBuddies",
+                        formatted_name: "Chat contacts",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "friends",
+                        name:           "friends",
+                        formatted_name: "Friends",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "family",
+                        name:           "family",
+                        formatted_name: "Family",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "coworkers",
+                        name:           "coworkers",
+                        formatted_name: "Coworkers",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "blocked",
+                        name:           "blocked",
+                        formatted_name: "Blocked",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                      GSuite::Raw::ContactGroup.new(
+                        id:             "starred",
+                        name:           "starred",
+                        formatted_name: "Starred",
+                        group_type:     "SYSTEM_CONTACT_GROUP",
+                        deleted:        nil
+                      ),
+                    ],
+                    "EITww5P40v4C",
+                  ]))
+      end
+    end
+  end
+
+  describe("#fetch_contact_group_members") do
+    subject(:members) { client.fetch_contact_group_members("2924db450ca4eed7") }
+
+    before do
+      Timecop.freeze(Time.zone.local(2020, 7, 8, 15, 0, 6)) if playback?
+    end
+
+    it("returns contact group members for the given contact group in the GSuite account") do
+      VCR.use_cassette("google_client_fetch_contact_group_members") do
+        expect(members.sort)
+          .to(eql(%w[c5832867659682504457 c6764048178195122168].sort))
+      end
+    end
+  end
 end

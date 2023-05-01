@@ -31,6 +31,12 @@ class GoogleContact < ApplicationRecord
              dependent:   :destroy,
              inverse_of:  :contacts
 
+  # rubocop:disable Rails/HasAndBelongsToMany
+  has_and_belongs_to_many :contact_groups,
+                          class_name:              "GoogleContactGroup",
+                          association_foreign_key: "google_contact_group_id"
+  # rubocop:enable Rails/HasAndBelongsToMany
+
   validates :google_id,
             presence:   true,
             uniqueness: { scope: :google_account_id, case_sensitive: false, on: :create }

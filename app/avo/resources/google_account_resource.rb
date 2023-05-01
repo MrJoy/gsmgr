@@ -22,11 +22,13 @@ class GoogleAccountResource < Avo::BaseResource
 
   field :id, as: :id, link_to_resource: true
 
-  field :google_id,          as: :text, hide_on: %i[new edit]
-  field :email,              as: :text, hide_on: %i[new edit], sortable: true
-  field :scopes,             as: :text, hide_on: %i[index new edit], format_using: fmt_array
-  field :contact_sync_token, as: :text, hide_on: %i[index new edit], format_using: trim_text
+  field :google_id,                as: :text, hide_on: %i[new edit]
+  field :email,                    as: :text, hide_on: %i[new edit], sortable: true
+  field :scopes,                   as: :text, hide_on: %i[index new edit], format_using: fmt_array
+  field :contact_sync_token,       as: :text, hide_on: %i[index new edit], format_using: trim_text
+  field :contact_group_sync_token, as: :text, hide_on: %i[index new edit], format_using: trim_text
 
   field :calendar_instances, as: :has_many, hide_on: %i[new edit]
+  field :contact_groups,     as: :has_many, hide_on: %i[new edit]
   field :contacts,           as: :has_many, hide_on: %i[new edit]
 end

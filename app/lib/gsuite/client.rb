@@ -9,8 +9,14 @@
 # rubocop:disable Metrics/ClassLength
 class GSuite::Client
   PAGE = 100
+  CONTACT_GROUP_PAGE = 100_000 # No pagination for this endpoint. No docs on limit.
   TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
   CONTACT_FIELDS = "emailAddresses,names"
+  CONTACT_GROUP_FIELDS = "clientData,groupType,metadata,name"
+  CONTACT_GROUP_MEMBERS_FIELDS = "clientData"
+
+  # These groups are just noise, since they just contain every contact:
+  BANNED_GROUPS = %w[myContacts all].freeze
 
   NOT_FOUND = "notFound"
 
@@ -93,6 +99,52 @@ class GSuite::Client
     else
       contacts
     end
+  end
+
+  def options_for_fetch_contact_groups(next_page_token, sync_token)
+    options = {
+      page_size:    PAGE,
+      page_token:   next_page_token,
+      group_fields: CONTACT_GROUP_FIELDS,
+    }
+
+    options[:sync_token] = sync_token if sync_token
+
+    options
+  end
+
+  def fetch_contact_groups(sync_token: nil)
+    check_credentials!
+
+    groups = []
+    next_page_token = nil
+    next_sync_token = nil
+    loop do
+      options = options_for_fetch_contact_groups(next_page_token, sync_token)
+      resp = @people_svc.list_contact_groups(**options)
+
+      groups += resp.contact_groups if resp.contact_groups
+      next_page_token = resp.next_page_token
+      next_sync_token = resp.next_sync_token
+
+      break unless next_page_token
+    end
+
+    groups.reject! { |group| BANNED_GROUPS.include?(group.name) }
+
+    groups.map! { |group| GSuite::Raw::ContactGroup.from_google(group) }
+
+    [groups, next_sync_token]
+  end
+
+  def fetch_contact_group_members(id)
+    check_credentials!
+
+    group = @people_svc.get_contact_group("contactGroups/#{id}",
+                                          max_members:  CONTACT_GROUP_PAGE,
+                                          group_fields: CONTACT_GROUP_MEMBERS_FIELDS)
+
+    group.member_resource_names&.map { |resource_name| resource_name.split("/").last } || []
   end
 
   def fetch_calendars
