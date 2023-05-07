@@ -5,7 +5,7 @@ require "redis"
 # https://github.com/googleapis/google-auth-library-ruby
 require "googleauth"
 require "googleauth/web_user_authorizer"
-require "googleauth/stores/redis_token_store"
+require "googleauth/token_store"
 # https://github.com/googleapis/google-api-ruby-client
 require "google/apis/people_v1"
 require "google/apis/calendar_v3"
