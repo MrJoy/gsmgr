@@ -12,9 +12,11 @@ class GoogleContactEmailResource < Avo::BaseResource
       back_button
     end
 
+  heading "Metadata"
   field :id, as: :id, link_to_resource: true
 
-  field :email, as: :text, hide_on: %i[new edit], sortable: true
+  heading "Details"
+  field :email, as: :text, readonly: true, sortable: true
 
-  field :contact, as: :belongs_to, hide_on: %i[new edit]
+  field :contact, as: :belongs_to, readonly: true
 end

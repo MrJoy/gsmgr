@@ -12,12 +12,14 @@ class GoogleCalendarInstanceResource < Avo::BaseResource
       back_button
     end
 
+  heading "Metadata"
   field :id, as: :id, link_to_resource: true
 
-  field :primary,     as: :boolean, hide_on: %i[new edit]
-  field :access_role, as: :text,    hide_on: %i[new edit]
-  field :summary,     as: :text,    hide_on: %i[new edit], sortable: true
+  heading "Details"
+  field :summary,     as: :text,    readonly: true, sortable: true
+  field :primary,     as: :boolean, readonly: true
+  field :access_role, as: :text,    readonly: true
 
-  field :account,  as: :belongs_to, hide_on: %i[new edit]
-  field :calendar, as: :belongs_to, hide_on: %i[new edit]
+  field :account,  as: :belongs_to, readonly: true
+  field :calendar, as: :belongs_to, readonly: true
 end

@@ -1,4 +1,4 @@
-[data-field-type='number'] {
+[data-field-type='number'] [data-slot='value'] {
   text-align: right;
 }
 

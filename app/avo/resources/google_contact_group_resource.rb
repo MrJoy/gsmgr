@@ -9,11 +9,14 @@ class GoogleContactGroupResource < Avo::BaseResource
 
   field :id, as: :id, link_to_resource: true
 
-  field :google_id,      as: :text
-  field :name,           as: :text
-  field :formatted_name, as: :text
-  field :group_type,     as: :text
+  heading "Metadata"
+  field :google_id, as: :text, readonly: true
 
-  field :account,  as: :belongs_to
-  field :contacts, as: :has_and_belongs_to_many
+  heading "Details"
+  field :name,           as: :text, readonly: true
+  field :formatted_name, as: :text, readonly: true
+  field :group_type,     as: :text, readonly: true
+
+  field :account,  as: :belongs_to,              readonly: true
+  field :contacts, as: :has_and_belongs_to_many, readonly: true
 end
