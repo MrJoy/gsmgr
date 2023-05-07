@@ -41,5 +41,5 @@ class GoogleContact < ApplicationRecord
             presence:   true,
             uniqueness: { scope: :google_account_id, case_sensitive: false, on: :create }
 
-  has_many :emails, class_name: "GoogleContactEmail", dependent: :destroy
+  has_many :emails, class_name: "GoogleContactEmail", dependent: :destroy, inverse_of: :contact
 end
