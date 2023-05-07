@@ -9,6 +9,7 @@ require "googleauth/token_store"
 # https://github.com/googleapis/google-api-ruby-client
 require "google/apis/people_v1"
 require "google/apis/calendar_v3"
+require "google/apis/drive_v3"
 
 GOOGLE_CLIENT_ID = Google::Auth::ClientId.new(
   Rails.configuration.google[:client_id],

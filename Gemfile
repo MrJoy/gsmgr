@@ -41,6 +41,7 @@ gem "railties", *RAILS_VERSION_SPECIFIER
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "google-apis-calendar_v3",  "~> 0.3"
+gem "google-apis-drive_v3",     "~> 0.39"
 gem "google-apis-people_v1",    "~> 0.3"
 gem "mail",                     "~> 2.8.1"
 # gem "oj",                       "~> 3.11" # Fluentd prefers this, and... maaaybe others?

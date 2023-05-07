@@ -225,4 +225,25 @@ RSpec.describe(GSuite::Client, type: :lib) do
       end
     end
   end
+
+  describe("#fetch_drive_info") do
+    subject(:info) { client.fetch_drive_info }
+
+    before do
+      Timecop.freeze(Time.zone.local(2023, 5, 5, 14, 15, 0)) if playback?
+    end
+
+    it("returns storage/quota information for user's account") do
+      VCR.use_cassette("google_client_fetch_drive_info") do
+        expect(info).to(eq(
+                          GSuite::Raw::Drive.new(
+                            limit:             16_106_127_360,
+                            total_usage:       858_337_910,
+                            drive_usage:       858_337_910,
+                            drive_trash_usage: 86_585
+                          )
+                        ))
+      end
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_01_014511) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_07_212044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_01_014511) do
     t.string "scopes", default: [], array: true
     t.string "contact_sync_token"
     t.string "contact_group_sync_token"
+    t.bigint "storage_limit"
+    t.bigint "storage_total_usage"
+    t.bigint "storage_drive_usage"
+    t.bigint "storage_drive_trash_usage"
     t.index "lower((email)::text) varchar_pattern_ops", name: "index_google_accounts_on_email"
     t.index "lower((google_id)::text) varchar_pattern_ops", name: "unique_google_accounts_idx", unique: true
   end

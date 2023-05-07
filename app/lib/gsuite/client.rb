@@ -8,6 +8,10 @@
 #   https://developers.google.com/calendar/api/guides/overview
 #   https://developers.google.com/calendar/api/v3/reference
 #   https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/CalendarV3.html
+# https://developers.google.com/drive
+#   https://developers.google.com/drive/api/guides/about-sdk
+#   https://developers.google.com/drive/api/reference/rest/v3
+#   https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/DriveV3.html
 #
 # rubocop:disable Metrics/ClassLength
 class GSuite::Client
@@ -172,6 +176,12 @@ class GSuite::Client
     [next_sync_token, calendars.map { |cal| GSuite::Raw::Calendar.from_google(cal) }]
   end
 
+  def fetch_drive_info
+    check_credentials!
+
+    GSuite::Raw::Drive.from_google(@drive_svc.get_about(fields: "storageQuota"))
+  end
+
   # N.B. We override inspect because it will normally log sensitive things, such as the API token,
   # **and refresh token**!
   def inspect
@@ -188,6 +198,10 @@ class GSuite::Client
     @calendar_svc = Google::Apis::CalendarV3::CalendarService.new
     @calendar_svc.authorization = @credentials
     apply_timeouts!(@calendar_svc)
+
+    @drive_svc = Google::Apis::DriveV3::DriveService.new
+    @drive_svc.authorization = @credentials
+    apply_timeouts!(@drive_svc)
   end
 
   def apply_timeouts!(service)

@@ -5,14 +5,18 @@
 #
 # Table name: google_accounts
 #
-#  id                       :bigint           not null, primary key
-#  contact_group_sync_token :string
-#  contact_sync_token       :string
-#  email                    :string           not null
-#  scopes                   :string           default([]), is an Array
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  google_id                :string           not null
+#  id                        :bigint           not null, primary key
+#  contact_group_sync_token  :string
+#  contact_sync_token        :string
+#  email                     :string           not null
+#  scopes                    :string           default([]), is an Array
+#  storage_drive_trash_usage :bigint
+#  storage_drive_usage       :bigint
+#  storage_limit             :bigint
+#  storage_total_usage       :bigint
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  google_id                 :string           not null
 #
 # Indexes
 #
