@@ -18,6 +18,12 @@ else
     # N.B. If changing this, see `codecov.yml`, and keep things in sync!
     add_filter("/config/initializers/")
 
+    # Not bothering with tests for admin UI stuff, as this doesn't cover "real" logic and testing
+    # complexity/overhead is high.  Plus, since it's declarative, this is artificially _increasing_
+    # our coverage metric a bit right now.
+    add_filter("/app/avo/")
+    add_filter("/app/controllers/avo/")
+
     groups.reject! { |k, _| k == "Channels" }
 
     add_group("Commands", "app/commands")
