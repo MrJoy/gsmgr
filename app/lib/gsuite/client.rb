@@ -2,9 +2,9 @@
 
 # Useful docs:
 # https://developers.google.com/people
+#   https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/PeopleV1.html
 # https://developers.google.com/calendar/api/guides/overview
-# https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/CalendarV3.html
-# https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/PeopleV1.html
+#   https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/CalendarV3.html
 #
 # rubocop:disable Metrics/ClassLength
 class GSuite::Client
