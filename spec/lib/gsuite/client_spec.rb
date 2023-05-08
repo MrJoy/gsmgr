@@ -339,7 +339,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   spaces:        ["drive"],
                                   shortcut:      {
                                     target_id:        "00000-document0003-00000",
-                                    target_mime_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                    target_mime_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", # rubocop:disable Layout/LineLength
                                   },
                                   web_view_link: "https://drive.google.com/file/d/00000-document0002-00000/view?usp=drivesdk"
                                 ),

@@ -35,7 +35,7 @@ GSuite::Raw::File =
       shortcut: nil
     )
       capabilities ||= {}
-      capabilities.reject! { |_, v| !v }
+      capabilities.select! { |_, v| v }
       capabilities = capabilities.to_a.sort.to_h
 
       super(id,
@@ -54,8 +54,10 @@ GSuite::Raw::File =
             web_view_link)
     end
 
+    # rubocop:disable Metrics/PerceivedComplexity
     def self.from_google(gfile)
-      raise "File #{gfile.id} has more than one parent!" if (gfile.parents || []).length > 1
+      multiple_parents = (gfile.parents || []).length > 1
+      raise StandardError, "File #{gfile.id} has more than one parent!" if multiple_parents
 
       GSuite::Raw::File.new(
         id:            gfile.id,
@@ -74,4 +76,5 @@ GSuite::Raw::File =
         web_view_link: gfile.web_view_link
       )
     end
+    # rubocop:enable Metrics/PerceivedComplexity
   end
