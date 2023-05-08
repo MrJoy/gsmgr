@@ -1,0 +1,258 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/drive/v3/files?corpora=user&fields=nextPageToken,incompleteSearch,files(id,mimeType,name,quotaBytesUsed,parents,spaces,starred,trashed,shared,permissions(id,emailAddress,deleted,role,type,pendingOwner,allowFileDiscovery),capabilities,shortcutDetails,webViewLink)
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - unknown/0.0.0 google-apis-drive_v3/0.39.0 Mac OS X/12.6.5 (gzip)
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Mon, 08 May 2023 02:19:59 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/3.1.4 gdcl/1.39.0
+      Authorization:
+      - Bearer ya29.blah-blah-meh_meh_meh_meh-blah
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 08 May 2023 02:20:00 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Vary:
+      - Origin, X-Origin
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "nextPageToken": null,
+          "incompleteSearch": false,
+          "files": [
+            {
+              "mimeType": "application/vnd.google-apps.spreadsheet",
+              "parents": [
+                "00000-parent0001-00000"
+              ],
+              "shared": false,
+              "webViewLink": "https://docs.google.com/spreadsheets/d/00000-document0001-00000/edit?usp=drivesdk",
+              "permissions": [
+                {
+                  "id": "00000-permission0001-00000",
+                  "type": "user",
+                  "emailAddress": "sciandu@gmail.com",
+                  "role": "owner",
+                  "deleted": false,
+                  "pendingOwner": false
+                }
+              ],
+              "spaces": [
+                "drive"
+              ],
+              "id": "00000-document0001-00000",
+              "name": "Some Spreadsheet",
+              "starred": true,
+              "trashed": false,
+              "quotaBytesUsed": "0",
+              "capabilities": {
+                "canChangeViewersCanCopyContent": true,
+                "canEdit": true,
+                "canCopy": true,
+                "canComment": true,
+                "canAddChildren": false,
+                "canDelete": true,
+                "canDownload": true,
+                "canListChildren": false,
+                "canRemoveChildren": false,
+                "canRename": true,
+                "canTrash": true,
+                "canReadRevisions": true,
+                "canChangeCopyRequiresWriterPermission": true,
+                "canMoveItemIntoTeamDrive": true,
+                "canUntrash": true,
+                "canModifyContent": true,
+                "canMoveItemOutOfDrive": true,
+                "canAddMyDriveParent": false,
+                "canRemoveMyDriveParent": true,
+                "canMoveItemWithinDrive": true,
+                "canShare": true,
+                "canMoveChildrenWithinDrive": false,
+                "canModifyContentRestriction": true,
+                "canChangeSecurityUpdateEnabled": false,
+                "canAcceptOwnership": false,
+                "canReadLabels": false,
+                "canModifyLabels": false
+              }
+            },
+            {
+              "mimeType": "application/vnd.google-apps.shortcut",
+              "parents": [
+                "00000-parent0002-00000"
+              ],
+              "shared": true,
+              "webViewLink": "https://drive.google.com/file/d/00000-document0002-00000/view?usp=drivesdk",
+              "spaces": [
+                "drive"
+              ],
+              "id": "00000-document0002-00000",
+              "name": "Some Document Shortcut",
+              "starred": false,
+              "trashed": false,
+              "quotaBytesUsed": "0",
+              "capabilities": {
+                "canChangeViewersCanCopyContent": false,
+                "canEdit": false,
+                "canCopy": true,
+                "canComment": false,
+                "canAddChildren": false,
+                "canDelete": false,
+                "canDownload": false,
+                "canListChildren": false,
+                "canRemoveChildren": false,
+                "canRename": false,
+                "canTrash": false,
+                "canReadRevisions": false,
+                "canChangeCopyRequiresWriterPermission": false,
+                "canMoveItemIntoTeamDrive": false,
+                "canUntrash": false,
+                "canModifyContent": false,
+                "canMoveItemOutOfDrive": false,
+                "canAddMyDriveParent": false,
+                "canRemoveMyDriveParent": false,
+                "canMoveItemWithinDrive": false,
+                "canShare": false,
+                "canMoveChildrenWithinDrive": false,
+                "canModifyContentRestriction": false,
+                "canChangeSecurityUpdateEnabled": false,
+                "canAcceptOwnership": false,
+                "canReadLabels": false,
+                "canModifyLabels": false
+              },
+              "shortcutDetails": {
+                "targetId": "00000-document0003-00000",
+                "targetMimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              }
+            },
+            {
+              "mimeType": "application/vnd.google-apps.spreadsheet",
+              "parents": [
+                "00000-parent0003-00000"
+              ],
+              "shared": true,
+              "webViewLink": "https://docs.google.com/spreadsheets/d/00000-document0004-00000/edit?usp=drivesdk",
+              "spaces": [
+                "drive"
+              ],
+              "id": "00000-document0004-00000",
+              "name": "Projects",
+              "starred": false,
+              "trashed": true,
+              "quotaBytesUsed": "1024",
+              "capabilities": {
+                "canChangeViewersCanCopyContent": false,
+                "canEdit": false,
+                "canCopy": true,
+                "canComment": false,
+                "canAddChildren": false,
+                "canDelete": false,
+                "canDownload": true,
+                "canListChildren": false,
+                "canRemoveChildren": false,
+                "canRename": false,
+                "canTrash": false,
+                "canReadRevisions": false,
+                "canChangeCopyRequiresWriterPermission": false,
+                "canMoveItemIntoTeamDrive": false,
+                "canUntrash": false,
+                "canModifyContent": false,
+                "canMoveItemOutOfDrive": false,
+                "canAddMyDriveParent": false,
+                "canRemoveMyDriveParent": true,
+                "canMoveItemWithinDrive": false,
+                "canShare": false,
+                "canMoveChildrenWithinDrive": false,
+                "canModifyContentRestriction": false,
+                "canChangeSecurityUpdateEnabled": false,
+                "canAcceptOwnership": false,
+                "canReadLabels": false,
+                "canModifyLabels": false
+              }
+            },
+            {
+              "mimeType": "application/vnd.google-apps.folder",
+              "parents": [
+                "00000-parent0003-00000"
+              ],
+              "shared": true,
+              "webViewLink": "https://drive.google.com/drive/folders/00000-parent0002-00000",
+              "spaces": [
+                "drive"
+              ],
+              "id": "00000-parent0002-00000",
+              "name": "Some Folder",
+              "starred": false,
+              "trashed": false,
+              "quotaBytesUsed": "0",
+              "capabilities": {
+                "canChangeViewersCanCopyContent": false,
+                "canEdit": false,
+                "canCopy": false,
+                "canComment": false,
+                "canAddChildren": false,
+                "canDelete": false,
+                "canDownload": true,
+                "canListChildren": true,
+                "canRemoveChildren": false,
+                "canRename": false,
+                "canTrash": false,
+                "canReadRevisions": false,
+                "canChangeCopyRequiresWriterPermission": false,
+                "canMoveItemIntoTeamDrive": false,
+                "canUntrash": false,
+                "canModifyContent": false,
+                "canMoveItemOutOfDrive": false,
+                "canAddMyDriveParent": false,
+                "canRemoveMyDriveParent": true,
+                "canMoveItemWithinDrive": false,
+                "canShare": false,
+                "canMoveChildrenWithinDrive": false,
+                "canModifyContentRestriction": false,
+                "canChangeSecurityUpdateEnabled": false,
+                "canAcceptOwnership": false,
+                "canReadLabels": false,
+                "canModifyLabels": false
+              }
+            }
+          ]
+        }
+  recorded_at: Mon, 08 May 2023 02:20:00 GMT

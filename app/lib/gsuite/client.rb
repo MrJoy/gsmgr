@@ -11,6 +11,7 @@
 # https://developers.google.com/drive
 #   https://developers.google.com/drive/api/guides/about-sdk
 #   https://developers.google.com/drive/api/reference/rest/v3
+#   https://developers.google.com/drive/api/guides/fields-parameter
 #   https://googleapis.dev/ruby/google-api-client/latest/Google/Apis/DriveV3.html
 #
 # rubocop:disable Metrics/ClassLength
@@ -22,6 +23,46 @@ class GSuite::Client
   CONTACT_GROUP_FIELDS         = "clientData,groupType,metadata,name"
   CONTACT_GROUP_MEMBERS_FIELDS = "clientData"
   BANNED_CONTACT_GROUPS        = %w[myContacts all].freeze # Contains every contact, so just noise.
+
+  # Default fields: id, kind, mimeType, name
+  #
+  # copyRequiresWriterPermission:
+  #   "Whether the options to copy, print, or download this file, should be disabled for
+  #    readers and commenters."
+  # writersCanShare:
+  #   "Whether users with only writer permission can modify the file's permissions. Not
+  #    populated for items in shared drives."
+  #
+  # Arrays:
+  # * spaces
+  # * parents (apparently only one -- but have a sanity check!)
+  # * owners (only one, unless we somehow get access to a legacy document of some kind)
+  # * permissions
+  #
+  # Hashes:
+  # * shortcutDetails
+  # * capabilities
+  FILE_FIELDS = %w[
+    id
+    mimeType
+    name
+    quotaBytesUsed
+    parents
+    spaces
+    starred
+    trashed
+    shared
+    permissions(id,emailAddress,deleted,role,type,pendingOwner,allowFileDiscovery)
+    capabilities
+    shortcutDetails
+    webViewLink
+  ].join(",")
+  # TODO: Do we care about any of the following?
+  # * copyRequiresWriterPermission
+  # * writersCanShare
+  # * contentRestrictions
+  # * labelInfo (as a means of controlling group assignments?)
+  FILE_LIST_FIELDS = "nextPageToken,incompleteSearch,files(#{FILE_FIELDS})".freeze
 
   NOT_FOUND = "notFound"
 
@@ -178,6 +219,40 @@ class GSuite::Client
     check_credentials!
 
     GSuite::Raw::Drive.from_google(@drive_svc.get_about(fields: "storageQuota"))
+  end
+
+  def fetch_files
+    check_credentials!
+
+    files             = []
+    next_page_token   = nil
+    incomplete_search = false
+    loop do
+      # TODO: Do we care about any of the following options?
+      # * `include_items_from_all_drives: true`
+      # * `supports_all_drives:           true`
+      # * `spaces:                        "drive"`
+      resp = @drive_svc.list_files(
+        # N.B. `page_size` is ignored when specifying `fields`.
+        #
+        # Query for folders:
+        #   `q: "mimeType = 'application/vnd.google-apps.folder'"`
+        #
+        # Query for files in a folder:
+        #   `q: "parents in '1lYGSyevXLLyJXZEBBhz7mFT_TefnrJIn'"`
+        corpora:    "user", # ... drive, allDrives
+        fields:     FILE_LIST_FIELDS,
+        page_token: next_page_token
+      )
+
+      incomplete_search ||= resp.incomplete_search
+      files              += resp.files if resp.files
+      next_page_token     = resp.next_page_token
+
+      break unless next_page_token
+    end
+
+    [incomplete_search, files.map { |file| GSuite::Raw::File.from_google(file) }]
   end
 
   # N.B. We override inspect because it will normally log sensitive things, such as the API token,

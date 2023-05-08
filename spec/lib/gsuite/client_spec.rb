@@ -246,4 +246,109 @@ RSpec.describe(GSuite::Client, type: :lib) do
       end
     end
   end
+
+  describe("#fetch_files") do
+    subject(:result) { client.fetch_files }
+
+    before do
+      Timecop.freeze(Time.zone.local(2023, 5, 5, 19, 8, 0)) if playback?
+    end
+
+    it("returns data about all files the user has access to") do
+      VCR.use_cassette("google_client_fetch_files") do
+        expect(result).to(eq(
+                            [
+                              false,
+                              [
+                                GSuite::Raw::File.new(
+                                  id:            "00000-document0001-00000",
+                                  mime_type:     "application/vnd.google-apps.spreadsheet",
+                                  name:          "Some Spreadsheet",
+                                  parent_id:     "00000-parent0001-00000",
+                                  capabilities:  {
+                                    can_change_viewers_can_copy_content:        true,
+                                    can_edit:                                   true,
+                                    can_copy:                                   true,
+                                    can_comment:                                true,
+                                    can_delete:                                 true,
+                                    can_download:                               true,
+                                    can_rename:                                 true,
+                                    can_trash:                                  true,
+                                    can_read_revisions:                         true,
+                                    can_change_copy_requires_writer_permission: true,
+                                    can_move_item_into_team_drive:              true,
+                                    can_untrash:                                true,
+                                    can_modify_content:                         true,
+                                    can_move_item_out_of_drive:                 true,
+                                    can_remove_my_drive_parent:                 true,
+                                    can_move_item_within_drive:                 true,
+                                    can_share:                                  true,
+                                    can_modify_content_restriction:             true,
+                                  },
+                                  permissions:   [
+                                    GSuite::Raw::Permission.new(
+                                      id:            "00000-permission0001-00000",
+                                      email_address: "sciandu@gmail.com",
+                                      deleted:       false,
+                                      role:          "owner",
+                                      type:          "user",
+                                      pending_owner: false
+                                    ),
+                                  ],
+                                  spaces:        ["drive"],
+                                  starred:       true,
+                                  web_view_link: "https://docs.google.com/spreadsheets/d/00000-document0001-00000/edit?usp=drivesdk"
+                                ),
+                                GSuite::Raw::File.new(
+                                  id:            "00000-document0002-00000",
+                                  mime_type:     "application/vnd.google-apps.shortcut",
+                                  name:          "Some Document Shortcut",
+                                  parent_id:     "00000-parent0002-00000",
+                                  capabilities:  {
+                                    can_copy: true,
+                                  },
+                                  shared:        true,
+                                  spaces:        ["drive"],
+                                  shortcut:      {
+                                    target_id:        "00000-document0003-00000",
+                                    target_mime_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                  },
+                                  web_view_link: "https://drive.google.com/file/d/00000-document0002-00000/view?usp=drivesdk"
+                                ),
+                                GSuite::Raw::File.new(
+                                  id:            "00000-document0004-00000",
+                                  mime_type:     "application/vnd.google-apps.spreadsheet",
+                                  name:          "Projects",
+                                  parent_id:     "00000-parent0003-00000",
+                                  capabilities:  {
+                                    can_copy:                   true,
+                                    can_download:               true,
+                                    can_remove_my_drive_parent: true,
+                                  },
+                                  quota_size:    1024,
+                                  shared:        true,
+                                  spaces:        ["drive"],
+                                  trashed:       true,
+                                  web_view_link: "https://docs.google.com/spreadsheets/d/00000-document0004-00000/edit?usp=drivesdk"
+                                ),
+                                GSuite::Raw::File.new(
+                                  id:            "00000-parent0002-00000",
+                                  mime_type:     "application/vnd.google-apps.folder",
+                                  name:          "Some Folder",
+                                  parent_id:     "00000-parent0003-00000",
+                                  capabilities:  {
+                                    can_download:               true,
+                                    can_list_children:          true,
+                                    can_remove_my_drive_parent: true,
+                                  },
+                                  shared:        true,
+                                  spaces:        ["drive"],
+                                  web_view_link: "https://drive.google.com/drive/folders/00000-parent0002-00000"
+                                ),
+                              ],
+                            ]
+                          ))
+      end
+    end
+  end
 end
