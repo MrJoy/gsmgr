@@ -265,6 +265,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   mime_type:     "application/vnd.google-apps.spreadsheet",
                                   name:          "Some Spreadsheet",
                                   parent_id:     "00000-parent0001-00000",
+                                  owner:         "jfrisby@somewhere.com",
                                   capabilities:  {
                                     can_change_viewers_can_copy_content:        true,
                                     can_edit:                                   true,
@@ -288,7 +289,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   permissions:   [
                                     GSuite::Raw::Permission.new(
                                       id:            "00000-permission0001-00000",
-                                      email_address: "sciandu@gmail.com",
+                                      email_address: "jfrisby@somewhere.com",
                                       deleted:       false,
                                       role:          "owner",
                                       type:          "user",
@@ -304,9 +305,36 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   mime_type:     "application/vnd.google-apps.shortcut",
                                   name:          "Some Document Shortcut",
                                   parent_id:     "00000-parent0002-00000",
+                                  owner:         "foobar@gmail.com",
                                   capabilities:  {
                                     can_copy: true,
                                   },
+                                  permissions: [
+                                    GSuite::Raw::Permission.new(
+                                      id:            "00000-permission0002-00000",
+                                      email_address: "foo@foo.com",
+                                      deleted:       false,
+                                      role:          "writer",
+                                      type:          "user",
+                                      pending_owner: false
+                                    ),
+                                    GSuite::Raw::Permission.new(
+                                      id:            "00000-permission0003-00000",
+                                      email_address: "someoneelse@gmail.com",
+                                      deleted:       false,
+                                      role:          "writer",
+                                      type:          "user",
+                                      pending_owner: false
+                                    ),
+                                    GSuite::Raw::Permission.new(
+                                      id:            "00000-permission0004-00000",
+                                      email_address: "foobar@gmail.com",
+                                      deleted:       false,
+                                      role:          "owner",
+                                      type:          "user",
+                                      pending_owner: false
+                                    ),
+                                  ],
                                   shared:        true,
                                   spaces:        ["drive"],
                                   shortcut:      {
@@ -320,6 +348,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   mime_type:     "application/vnd.google-apps.spreadsheet",
                                   name:          "Projects",
                                   parent_id:     "00000-parent0003-00000",
+                                  owner:         "jfrisby@somewhere.com",
                                   quota_size:    1024,
                                   capabilities:  {
                                     can_copy:                   true,
@@ -336,6 +365,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   mime_type:     "application/vnd.google-apps.folder",
                                   name:          "Some Folder",
                                   parent_id:     "00000-parent0003-00000",
+                                  owner:         "jfrisby@somewhere.com",
                                   capabilities:  {
                                     can_download:               true,
                                     can_list_children:          true,

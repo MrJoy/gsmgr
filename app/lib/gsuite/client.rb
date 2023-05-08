@@ -52,6 +52,7 @@ class GSuite::Client
     starred
     trashed
     shared
+    owners(emailAddress)
     permissions(id,emailAddress,deleted,role,type,pendingOwner,allowFileDiscovery)
     capabilities
     shortcutDetails

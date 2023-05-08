@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files?corpora=user&fields=nextPageToken,incompleteSearch,files(id,mimeType,name,quotaBytesUsed,parents,spaces,starred,trashed,shared,permissions(id,emailAddress,deleted,role,type,pendingOwner,allowFileDiscovery),capabilities,shortcutDetails,webViewLink)
+    uri: https://www.googleapis.com/drive/v3/files?corpora=user&fields=nextPageToken,incompleteSearch,files(id,mimeType,name,quotaBytesUsed,parents,spaces,starred,trashed,shared,owners(emailAddress),permissions(id,emailAddress,deleted,role,type,pendingOwner,allowFileDiscovery),capabilities,shortcutDetails,webViewLink)
     body:
       encoding: UTF-8
       string: ''
@@ -14,7 +14,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Mon, 08 May 2023 02:19:59 GMT
+      - Mon, 08 May 2023 07:27:29 GMT
       X-Goog-Api-Client:
       - gl-ruby/3.1.4 gdcl/1.39.0
       Authorization:
@@ -27,15 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 May 2023 02:20:00 GMT
+      - Mon, 08 May 2023 07:27:30 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Vary:
+      - Origin, X-Origin
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Vary:
-      - Origin, X-Origin
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=UTF-8
       Content-Encoding:
@@ -56,7 +56,6 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "nextPageToken": null,
           "incompleteSearch": false,
           "files": [
             {
@@ -65,12 +64,17 @@ http_interactions:
                 "00000-parent0001-00000"
               ],
               "shared": false,
+              "owners": [
+                {
+                  "emailAddress": "jfrisby@somewhere.com"
+                }
+              ],
               "webViewLink": "https://docs.google.com/spreadsheets/d/00000-document0001-00000/edit?usp=drivesdk",
               "permissions": [
                 {
                   "id": "00000-permission0001-00000",
                   "type": "user",
-                  "emailAddress": "sciandu@gmail.com",
+                  "emailAddress": "jfrisby@somewhere.com",
                   "role": "owner",
                   "deleted": false,
                   "pendingOwner": false
@@ -120,7 +124,38 @@ http_interactions:
                 "00000-parent0002-00000"
               ],
               "shared": true,
+              "owners": [
+                {
+                  "emailAddress": "foobar@gmail.com"
+                }
+              ],
               "webViewLink": "https://drive.google.com/file/d/00000-document0002-00000/view?usp=drivesdk",
+              "permissions": [
+                {
+                  "id": "00000-permission0002-00000",
+                  "type": "user",
+                  "emailAddress": "foo@foo.com",
+                  "role": "writer",
+                  "deleted": false,
+                  "pendingOwner": false
+                },
+                {
+                  "id": "00000-permission0003-00000",
+                  "type": "user",
+                  "emailAddress": "someoneelse@gmail.com",
+                  "role": "writer",
+                  "deleted": false,
+                  "pendingOwner": false
+                },
+                {
+                  "id": "00000-permission0004-00000",
+                  "type": "user",
+                  "emailAddress": "foobar@gmail.com",
+                  "role": "owner",
+                  "deleted": false,
+                  "pendingOwner": false
+                }
+              ],
               "spaces": [
                 "drive"
               ],
@@ -169,6 +204,11 @@ http_interactions:
                 "00000-parent0003-00000"
               ],
               "shared": true,
+              "owners": [
+                {
+                  "emailAddress": "jfrisby@somewhere.com"
+                }
+              ],
               "webViewLink": "https://docs.google.com/spreadsheets/d/00000-document0004-00000/edit?usp=drivesdk",
               "spaces": [
                 "drive"
@@ -214,6 +254,11 @@ http_interactions:
                 "00000-parent0003-00000"
               ],
               "shared": true,
+              "owners": [
+                {
+                  "emailAddress": "jfrisby@somewhere.com"
+                }
+              ],
               "webViewLink": "https://drive.google.com/drive/folders/00000-parent0002-00000",
               "spaces": [
                 "drive"
