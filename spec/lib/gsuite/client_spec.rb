@@ -320,12 +320,12 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   mime_type:     "application/vnd.google-apps.spreadsheet",
                                   name:          "Projects",
                                   parent_id:     "00000-parent0003-00000",
+                                  quota_size:    1024,
                                   capabilities:  {
                                     can_copy:                   true,
                                     can_download:               true,
                                     can_remove_my_drive_parent: true,
                                   },
-                                  quota_size:    1024,
                                   shared:        true,
                                   spaces:        ["drive"],
                                   trashed:       true,
