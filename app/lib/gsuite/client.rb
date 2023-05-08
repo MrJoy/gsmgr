@@ -16,14 +16,12 @@
 # rubocop:disable Metrics/ClassLength
 class GSuite::Client
   PAGE = 100
-  CONTACT_GROUP_PAGE = 100_000 # No pagination for this endpoint. No docs on limit.
-  TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
-  CONTACT_FIELDS = "emailAddresses,names"
-  CONTACT_GROUP_FIELDS = "clientData,groupType,metadata,name"
-  CONTACT_GROUP_MEMBERS_FIELDS = "clientData"
 
-  # These groups are just noise, since they just contain every contact:
-  BANNED_GROUPS = %w[myContacts all].freeze
+  CONTACT_FIELDS               = "emailAddresses,names"
+  CONTACT_GROUP_PAGE           = 100_000 # No pagination for this endpoint. No docs on limit.
+  CONTACT_GROUP_FIELDS         = "clientData,groupType,metadata,name"
+  CONTACT_GROUP_MEMBERS_FIELDS = "clientData"
+  BANNED_CONTACT_GROUPS        = %w[myContacts all].freeze # Contains every contact, so just noise.
 
   NOT_FOUND = "notFound"
 
@@ -137,7 +135,7 @@ class GSuite::Client
       break unless next_page_token
     end
 
-    groups.reject! { |group| BANNED_GROUPS.include?(group.name) }
+    groups.reject! { |group| BANNED_CONTACT_GROUPS.include?(group.name) }
 
     groups.map! { |group| GSuite::Raw::ContactGroup.from_google(group) }
 
