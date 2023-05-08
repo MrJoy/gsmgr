@@ -309,7 +309,7 @@ RSpec.describe(GSuite::Client, type: :lib) do
                                   capabilities:  {
                                     can_copy: true,
                                   },
-                                  permissions: [
+                                  permissions:   [
                                     GSuite::Raw::Permission.new(
                                       id:            "00000-permission0002-00000",
                                       email_address: "foo@foo.com",
