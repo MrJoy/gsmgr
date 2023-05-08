@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_212044) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_08_061257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,6 +87,47 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_212044) do
     t.string "middle_name"
     t.string "given_name"
     t.index "google_account_id, lower((google_id)::text) varchar_pattern_ops", name: "index_google_contacts_on_google_account_id_and_google_id", unique: true
+  end
+
+  create_table "google_file_permissions", force: :cascade do |t|
+    t.bigint "google_account_id", null: false
+    t.string "google_id", null: false
+    t.string "role", null: false
+    t.string "target_type", null: false
+    t.string "email_address"
+    t.boolean "deleted"
+    t.boolean "pending_owner"
+    t.boolean "allow_file_discovery"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["google_account_id", "google_id"], name: "idx_google_file_permissions_on_google_account_id_and_google_id", unique: true
+  end
+
+  create_table "google_file_permissions_files", id: false, force: :cascade do |t|
+    t.bigint "google_file_id", null: false
+    t.bigint "google_file_permission_id", null: false
+    t.index ["google_file_id", "google_file_permission_id"], name: "idx_gfp_files_on_file_id_and_permission_id", unique: true
+    t.index ["google_file_permission_id"], name: "index_gfp_files_on_google_file_permission_id"
+  end
+
+  create_table "google_files", force: :cascade do |t|
+    t.bigint "google_account_id", null: false
+    t.string "google_id", null: false
+    t.bigint "parent_id"
+    t.string "name", null: false
+    t.string "owner", null: false
+    t.jsonb "capabilities", default: {}, null: false
+    t.string "spaces", default: [], null: false, array: true
+    t.string "web_view_link", null: false
+    t.bigint "quota_size", null: false
+    t.boolean "shared", null: false
+    t.boolean "stared", null: false
+    t.boolean "trashed", null: false
+    t.jsonb "shortcut"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["google_account_id", "google_id"], name: "index_google_files_on_google_account_id_and_google_id", unique: true
+    t.index ["parent_id"], name: "index_google_files_on_parent_id"
   end
 
   create_table "google_tokens", force: :cascade do |t|

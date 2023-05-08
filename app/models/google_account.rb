@@ -51,6 +51,16 @@ class GoogleAccount < ApplicationRecord
            class_name: "GoogleCalendar",
            through:    :calendar_instances
 
+  has_many :files,
+           class_name: "GoogleFile",
+           dependent:  :destroy,
+           inverse_of: :account
+
+  has_many :permissions,
+           class_name: "GoogleFilePermission",
+           dependent:  :destroy,
+           inverse_of: :account
+
   def self.required_scopes
     %w[
       openid

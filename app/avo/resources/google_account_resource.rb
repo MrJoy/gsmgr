@@ -48,5 +48,6 @@ class GoogleAccountResource < Avo::BaseResource
   field :calendar_instances, as: :has_many, readonly: true
   field :contact_groups,     as: :has_many, readonly: true
   field :contacts,           as: :has_many, readonly: true
+  field :files,              as: :has_many, readonly: true
 end
 # rubocop:enable Layout/LineLength

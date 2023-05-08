@@ -43,3 +43,17 @@ div[data-model-name='GoogleContactGroup'] * *[data-target='control:destroy'][dat
 div[data-model-name='GoogleContactGroup'] * *[data-target='control:detach'][data-control='detach'] {
   display: none !important;
 }
+
+div[data-model-name='GoogleFile'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleFile'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleFile'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleFile'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}
+
+div[data-model-name='GoogleFilePermission'][data-controller='resource-index '] * *[data-target='panel-tools'],
+div[data-model-name='GoogleFilePermission'] * *[data-target='control:edit'][data-control='edit'],
+div[data-model-name='GoogleFilePermission'] * *[data-target='control:destroy'][data-control='destroy'],
+div[data-model-name='GoogleFilePermission'] * *[data-target='control:detach'][data-control='detach'] {
+  display: none !important;
+}
