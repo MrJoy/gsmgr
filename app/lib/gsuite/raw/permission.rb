@@ -21,11 +21,11 @@ GSuite::Raw::Permission =
       allow_file_discovery: nil
     )
       super(id,
-            email_address,
+            email_address&.downcase,
             deleted,
-            role,
-            type,
-            !!pending_owner,
+            role, # writer, reader, owner, commenter
+            type, # user, anyone, group
+            pending_owner,
             allow_file_discovery)
     end
 
@@ -36,7 +36,7 @@ GSuite::Raw::Permission =
     def self.from_google(gperm)
       GSuite::Raw::Permission.new(
         id:                   gperm.id,
-        email_address:        gperm.email_address&.downcase,
+        email_address:        gperm.email_address,
         role:                 gperm.role,
         deleted:              gperm.deleted,
         type:                 gperm.type,
