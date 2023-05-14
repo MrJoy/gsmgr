@@ -7,8 +7,9 @@ class GoogleDriveFilesSync
   prepend SimpleCommand
   include CommandHelper
 
-  def initialize(account_id)
+  def initialize(account_id, files = nil)
     @account_id = account_id
+    @files      = files
   end
 
   def fetch_local_files(account)
@@ -16,6 +17,8 @@ class GoogleDriveFilesSync
   end
 
   def fetch_remote_files(client)
+    return @files.index_by(&:id) if @files
+
     incomplete, remote_files = client.fetch_files
 
     logger.warn("INCOMPLETE FILE LIST FOR #{account.email}!") if incomplete
