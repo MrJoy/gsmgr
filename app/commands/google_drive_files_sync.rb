@@ -71,6 +71,8 @@ class GoogleDriveFilesSync
 
     all_ids = (remote_permissions.keys + local_permissions.keys).uniq
 
+    all_ids.reject! { |id| id == "anyoneWithLink" }
+
     all_ids.each do |google_id|
       remote_permission = remote_permissions[google_id]
       local_permission  = local_permissions[google_id]
