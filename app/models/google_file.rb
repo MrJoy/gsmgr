@@ -13,7 +13,7 @@
 #  shared            :boolean          not null
 #  shortcut          :jsonb
 #  spaces            :string           default([]), not null, is an Array
-#  stared            :boolean          not null
+#  starred           :boolean          not null
 #  trashed           :boolean          not null
 #  web_view_link     :string           not null
 #  created_at        :datetime         not null

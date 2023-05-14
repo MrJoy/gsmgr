@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_08_061257) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_182005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_061257) do
     t.string "web_view_link", null: false
     t.bigint "quota_size", null: false
     t.boolean "shared", null: false
-    t.boolean "stared", null: false
+    t.boolean "starred", null: false
     t.boolean "trashed", null: false
     t.jsonb "shortcut"
     t.datetime "created_at", null: false
