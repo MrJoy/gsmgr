@@ -10,6 +10,7 @@ class SyncGoogleDrive < Avo::BaseAction
     errors = []
     models.each do |model|
       GoogleDriveInfoSync.call(model.id)
+      GoogleDriveFilesSync.call(model.id)
     rescue StandardError => e
       errors << "#{model.id}: #{e.message}"
     end
