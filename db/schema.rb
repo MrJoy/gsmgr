@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_182005) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_182213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -126,6 +126,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_182005) do
     t.jsonb "shortcut"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "mime_type", default: "", null: false
     t.index ["google_account_id", "google_id"], name: "index_google_files_on_google_account_id_and_google_id", unique: true
     t.index ["parent_id"], name: "index_google_files_on_parent_id"
   end

@@ -7,6 +7,7 @@
 #
 #  id                :bigint           not null, primary key
 #  capabilities      :jsonb            not null
+#  mime_type         :string           default(""), not null
 #  name              :string           not null
 #  owner             :string           not null
 #  quota_size        :bigint           not null
