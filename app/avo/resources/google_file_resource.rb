@@ -27,6 +27,7 @@ class GoogleFileResource < Avo::BaseResource
   field :shortcut,      as: :text,    readonly: true, hide_on: %i[index]
   field :web_view_link, as: :text,    readonly: true, hide_on: %i[index]
 
+  field :allowances,  as: :has_many,   readonly: true
   field :parent_id,   as: :text,       readonly: true, hide_on: %i[index]
   field :parent,      as: :belongs_to, readonly: true, sortable: ->(q, dir) { q.order(parent_id: dir) } # rubocop:disable Layout/LineLength
   field :account,     as: :belongs_to, readonly: true
