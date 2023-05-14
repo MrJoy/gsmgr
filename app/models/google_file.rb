@@ -40,7 +40,9 @@ class GoogleFile < ApplicationRecord
 
   belongs_to :parent,
              class_name: "GoogleFile",
-             inverse_of: :children
+             inverse_of: :children,
+             optional:   true,
+             validate:   false
 
   has_many :children,
            class_name:  "GoogleFile",
