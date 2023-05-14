@@ -17,6 +17,7 @@ class GoogleContactGroupResource < Avo::BaseResource
   field :formatted_name, as: :text, readonly: true
   field :group_type,     as: :text, readonly: true
 
-  field :account,  as: :belongs_to,              readonly: true
-  field :contacts, as: :has_and_belongs_to_many, readonly: true
+  field :account,    as: :belongs_to,              readonly: true
+  field :allowances, as: :has_many,                readonly: true
+  field :contacts,   as: :has_and_belongs_to_many, readonly: true
 end

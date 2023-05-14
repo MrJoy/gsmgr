@@ -50,6 +50,11 @@ class GoogleFile < ApplicationRecord
            dependent:   :destroy,
            inverse_of:  :parent
 
+  has_many :allowances,
+           class_name: "GoogleContactGroupAllowance",
+           dependent:  :destroy,
+           inverse_of: :file
+
   # rubocop:disable Rails/HasAndBelongsToMany
   has_and_belongs_to_many :permissions,
                           class_name:              "GoogleFilePermission",
