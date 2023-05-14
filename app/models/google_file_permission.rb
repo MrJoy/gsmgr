@@ -15,11 +15,12 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  google_account_id    :bigint           not null
+#  google_file_id       :string           not null
 #  google_id            :string           not null
 #
 # Indexes
 #
-#  idx_google_file_permissions_on_google_account_id_and_google_id  (google_account_id,google_id) UNIQUE
+#  idx_google_file_permissions_on_account_file_and_id  (google_account_id,google_file_id,google_id) UNIQUE
 #
 # rubocop:enable Lint/RedundantCopDisableDirective,Layout/LineLength
 
@@ -31,13 +32,12 @@ class GoogleFilePermission < ApplicationRecord
              dependent:   nil,
              inverse_of:  :permissions
 
-  # rubocop:disable Rails/HasAndBelongsToMany
-  has_and_belongs_to_many :files,
-                          class_name:              "GoogleFile",
-                          association_foreign_key: "google_file_id"
-  # rubocop:enable Rails/HasAndBelongsToMany
+  has_one :file,
+          class_name:  "GoogleFile",
+          primary_key: :google_file_id,
+          dependent:   nil
 
   validates :google_id,
             presence:   true,
-            uniqueness: { scope: :google_account_id, case_sensitive: false, on: :create }
+            uniqueness: { scope: %i[google_account_id google_file_id], on: :create }
 end

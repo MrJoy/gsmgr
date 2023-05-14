@@ -21,5 +21,5 @@ class GoogleFilePermissionResource < Avo::BaseResource
   field :pending_owner,        as: :boolean, readonly: true, hide_on: %i[index]
 
   field :account, as: :belongs_to, readonly: true
-  field :files,   as: :has_many,   readonly: true
+  field :file,    as: :belongs_to, readonly: true
 end

@@ -55,11 +55,10 @@ class GoogleFile < ApplicationRecord
            dependent:  :destroy,
            inverse_of: :file
 
-  # rubocop:disable Rails/HasAndBelongsToMany
-  has_and_belongs_to_many :permissions,
-                          class_name:              "GoogleFilePermission",
-                          association_foreign_key: "google_file_permission_id"
-  # rubocop:enable Rails/HasAndBelongsToMany
+  has_many :permissions,
+           class_name: "GoogleFilePermission",
+           dependent:  :destroy,
+           inverse_of: :file
 
   validates :google_id,
             presence:   true,

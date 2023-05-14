@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_203517) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_212814) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,7 +109,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_203517) do
     t.boolean "allow_file_discovery"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["google_account_id", "google_id"], name: "idx_google_file_permissions_on_google_account_id_and_google_id", unique: true
+    t.string "google_file_id", null: false
+    t.index ["google_account_id", "google_file_id", "google_id"], name: "idx_google_file_permissions_on_account_file_and_id", unique: true
   end
 
   create_table "google_file_permissions_files", id: false, force: :cascade do |t|

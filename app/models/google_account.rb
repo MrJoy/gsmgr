@@ -57,6 +57,7 @@ class GoogleAccount < ApplicationRecord
            inverse_of: :account
 
   has_many :permissions,
+           through:    :files,
            class_name: "GoogleFilePermission",
            dependent:  :destroy,
            inverse_of: :account
