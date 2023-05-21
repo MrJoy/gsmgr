@@ -23,7 +23,17 @@ class GoogleFileResource < Avo::BaseResource
   field :starred,       as: :boolean, readonly: true,                     sortable: true
   field :trashed,       as: :boolean, readonly: true,                     sortable: true
   field :spaces,        as: :text,    readonly: true, hide_on: %i[index], format_using: fmt_array
-  field :capabilities,  as: :text,    readonly: true, hide_on: %i[index]
+  field :capabilities,
+        as: :text,
+        readonly: true,
+        hide_on: %i[index],
+        format_using: ->(val) do
+          html =
+            ["<dl class=\"capabilities\">"] +
+            val&.map { |k, v| "<dt>#{k}</dt><dd>#{v}</dd>" } +
+            ["</dl>"]
+          html.join.html_safe # rubocop:disable Rails/OutputSafety
+        end
   field :shortcut,      as: :text,    readonly: true, hide_on: %i[index]
   field :web_view_link, as: :text,    readonly: true, hide_on: %i[index]
 

@@ -58,3 +58,17 @@ div[data-model-name='GoogleFilePermission'] * *[data-target='control:destroy'][d
 div[data-model-name='GoogleFilePermission'] * *[data-target='control:detach'][data-control='detach'] {
   display: none !important;
 }
+
+.capabilities {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 1em;
+}
+.capabilities dt {
+  font-weight: bold;
+  flex: 1 50%;
+}
+.capabilities dd {
+}
