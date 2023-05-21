@@ -35,19 +35,20 @@ class GoogleFile < ApplicationRecord
   belongs_to :account,
              class_name:  "GoogleAccount",
              foreign_key: :google_account_id,
-             dependent:   :destroy,
+             dependent:   false,
              inverse_of:  :files
 
   belongs_to :parent,
              class_name: "GoogleFile",
              inverse_of: :children,
+             dependent:   false,
              optional:   true,
              validate:   false
 
   has_many :children,
            class_name:  "GoogleFile",
            foreign_key: :parent_id,
-           dependent:   :destroy,
+           dependent:   false,
            inverse_of:  :parent
 
   has_many :allowances,
