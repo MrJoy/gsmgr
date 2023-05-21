@@ -50,6 +50,11 @@ class GoogleAccountResource < Avo::BaseResource
   field :calendar_instances, as: :has_many, readonly: true
   field :contact_groups,     as: :has_many, readonly: true
   field :contacts,           as: :has_many, readonly: true
-  field :files,              as: :has_many, readonly: true
+  field :files,
+        name:         "Files (Root)",
+        as:           :has_many,
+        readonly:     true,
+        use_resource: GoogleAccountFilesResource,
+        scope:        -> { query.where(parent_id: nil).unscope(:order).order(name: :asc) }
 end
 # rubocop:enable Layout/LineLength

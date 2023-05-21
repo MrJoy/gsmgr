@@ -43,7 +43,9 @@ Avo.configure do |config|
 
   ## == Resource options ==
   # config.resource_controls_placement = :right
-  # config.model_resource_mapping = {}
+  config.model_resource_mapping = {
+    "GoogleFile" => "GoogleFileResource",
+  }
   # config.default_view_type = :table
   config.per_page = 50
   config.per_page_steps = [50, 100, 200]
