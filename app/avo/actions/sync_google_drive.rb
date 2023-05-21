@@ -2,7 +2,8 @@
 
 # Run the GoogleDriveInfoSync command.
 class SyncGoogleDrive < Avo::BaseAction
-  self.name = "Sync Drive"
+  self.name    = "Sync Drive"
+  self.visible = -> { view == :show }
 
   def handle(**args)
     models, = args.values_at(:models)

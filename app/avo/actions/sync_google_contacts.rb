@@ -2,7 +2,8 @@
 
 # Run the GoogleContactSync command.
 class SyncGoogleContacts < Avo::BaseAction
-  self.name = "Sync Contacts"
+  self.name    = "Sync Contacts"
+  self.visible = -> { view == :show }
 
   def handle(**args)
     models, = args.values_at(:models)

@@ -2,7 +2,8 @@
 
 # Run the GoogleCalendarSync command.
 class SyncGoogleCalendars < Avo::BaseAction
-  self.name = "Sync Calendars"
+  self.name    = "Sync Calendars"
+  self.visible = -> { view == :show }
 
   def handle(**args)
     models, = args.values_at(:models)
