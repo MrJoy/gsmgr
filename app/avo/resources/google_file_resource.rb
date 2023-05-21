@@ -35,7 +35,7 @@ class GoogleFileResource < Avo::BaseResource
           html.join.html_safe # rubocop:disable Rails/OutputSafety
         end
   field :shortcut,      as: :text,    readonly: true, hide_on: %i[index]
-  field :web_view_link, as: :text,    readonly: true, hide_on: %i[index]
+  field :web_view_link, as: :text,    readonly: true, hide_on: %i[index], format_using: ->(val) { link_to(val, val, target: "_blank") } # rubocop:disable Layout/LineLength
 
   field :allowances,  as: :has_many,   readonly: true
   field :parent_id,   as: :text,       readonly: true, hide_on: %i[index]
