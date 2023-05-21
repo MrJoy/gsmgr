@@ -50,7 +50,7 @@ Avo.configure do |config|
   config.per_page = 50
   config.per_page_steps = [50, 100, 200]
   config.via_per_page = 25
-  # config.id_links_to_resource = false
+  config.id_links_to_resource = true
   # config.cache_resources_on_index_view = true
   ## permanent enable or disable cache_resource_filters, default value is false
   # config.cache_resource_filters = false

@@ -7,7 +7,7 @@ class GoogleContactGroupAllowanceResource < Avo::BaseResource
   self.record_selector    = false
   self.visible_on_sidebar = false
 
-  field :id, as: :id, link_to_resource: true
+  field :id, as: :id
 
   heading "Details"
   field :access_level, as: :select, options: GoogleContactGroupAllowance::ALLOWED_ACCESS_LEVELS

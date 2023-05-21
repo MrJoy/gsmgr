@@ -11,7 +11,7 @@ class GoogleFileResource < Avo::BaseResource
   fmt_array = ->(val) { val&.join("<br>\n")&.html_safe } # rubocop:disable Rails/OutputSafety
 
   heading "Metadata"
-  field :id,        as: :id, link_to_resource: true
+  field :id,        as: :id
   field :google_id, as: :text, readonly: true, hide_on: %i[index]
 
   heading "Details"

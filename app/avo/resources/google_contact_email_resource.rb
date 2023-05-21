@@ -13,7 +13,7 @@ class GoogleContactEmailResource < Avo::BaseResource
     end
 
   heading "Metadata"
-  field :id, as: :id, link_to_resource: true
+  field :id, as: :id
 
   heading "Details"
   field :email, as: :text, readonly: true, sortable: true

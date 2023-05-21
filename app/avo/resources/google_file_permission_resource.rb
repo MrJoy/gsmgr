@@ -9,7 +9,7 @@ class GoogleFilePermissionResource < Avo::BaseResource
   self.visible_on_sidebar = false
 
   heading "Metadata"
-  field :id,        as: :id, link_to_resource: true
+  field :id,        as: :id
   field :google_id, as: :text, readonly: true
 
   heading "Details"

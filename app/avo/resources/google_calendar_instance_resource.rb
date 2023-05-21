@@ -13,7 +13,7 @@ class GoogleCalendarInstanceResource < Avo::BaseResource
     end
 
   heading "Metadata"
-  field :id, as: :id, link_to_resource: true
+  field :id, as: :id
 
   heading "Details"
   field :summary,     as: :text,    readonly: true, sortable: true

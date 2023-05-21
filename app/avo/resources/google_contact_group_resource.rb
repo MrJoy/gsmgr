@@ -7,7 +7,7 @@ class GoogleContactGroupResource < Avo::BaseResource
   self.record_selector    = false
   self.visible_on_sidebar = false
 
-  field :id, as: :id, link_to_resource: true
+  field :id, as: :id
 
   heading "Metadata"
   field :google_id, as: :text, readonly: true

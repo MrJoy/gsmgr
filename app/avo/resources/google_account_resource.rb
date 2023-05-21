@@ -28,7 +28,7 @@ class GoogleAccountResource < Avo::BaseResource
   size      = ->(val) { view_context.number_to_human_size(val) }
 
   heading "Metadata"
-  field :id,        as: :id, link_to_resource: true
+  field :id,        as: :id
   field :google_id, as: :text, readonly: true
 
   heading "Details"
