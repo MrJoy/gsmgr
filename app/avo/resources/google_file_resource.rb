@@ -4,9 +4,9 @@
 #
 class GoogleFileResource < Avo::BaseResource
   self.title              = :name
-  self.includes           = %i[]
+  self.includes           = %i[parent]
   self.record_selector    = false
-  self.visible_on_sidebar = false
+  self.visible_on_sidebar = true
 
   fmt_array = ->(val) { val&.join("<br>\n")&.html_safe } # rubocop:disable Rails/OutputSafety
 
@@ -15,6 +15,8 @@ class GoogleFileResource < Avo::BaseResource
   field :google_id, as: :text, readonly: true, hide_on: %i[index]
 
   heading "Details"
+  field :parent_id,     as: :text,       readonly: true, hide_on: %i[index]
+  field :parent,        as: :belongs_to, readonly: true, sortable: ->(q, dir) { q.order(parent_id: dir) } # rubocop:disable Layout/LineLength
   field :name,          as: :text,    readonly: true,                     sortable: true
   field :mime_type,     as: :text,    readonly: true, hide_on: %i[index], sortable: true
   field :quota_size,    as: :number,  readonly: true,                     sortable: true
@@ -38,9 +40,9 @@ class GoogleFileResource < Avo::BaseResource
   field :web_view_link, as: :text,    readonly: true, hide_on: %i[index], format_using: ->(val) { link_to(val, val, target: "_blank") } # rubocop:disable Layout/LineLength
 
   field :allowances,  as: :has_many,   readonly: true
-  field :parent_id,   as: :text,       readonly: true, hide_on: %i[index]
-  field :parent,      as: :belongs_to, readonly: true, sortable: ->(q, dir) { q.order(parent_id: dir) } # rubocop:disable Layout/LineLength
   field :account,     as: :belongs_to, readonly: true
   field :permissions, as: :has_many,   readonly: true
   field :children,    as: :has_many,   readonly: true
+
+  filter AnyoneWithLink
 end

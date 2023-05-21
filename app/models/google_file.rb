@@ -64,4 +64,8 @@ class GoogleFile < ApplicationRecord
   validates :google_id,
             presence:   true,
             uniqueness: { scope: :google_account_id, case_sensitive: false, on: :create }
+
+  scope :anyone_with_link, -> do
+    where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").pluck(:google_file_id))
+  end
 end
