@@ -7,7 +7,7 @@ class Auth::GoogleController < ApplicationController
   helper :application
 
   def authorize
-    handle_authorization(auth_google_done_path)
+    handle_authorization(params[:target] || auth_google_done_path)
   end
 
   def callback
@@ -79,7 +79,9 @@ class Auth::GoogleController < ApplicationController
     hint = params[:hint] || nil
 
     client = GSuite::Client.new(hint, request:, scopes: GoogleAccount.required_scopes, authorizer:)
-    redirect_to(client.authorization_url, allow_other_host: true)
+
+    @dest = client.authorization_url
+    render("authorize", layout: nil)
   end
 
   def handle_error_condition!

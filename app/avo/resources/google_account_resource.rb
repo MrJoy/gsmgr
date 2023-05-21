@@ -11,11 +11,13 @@ class GoogleAccountResource < Avo::BaseResource
   self.show_controls =
     lambda do
       back_button
+      action(AuthorizeGoogleAccount, style: :primary, color: :green)
       action(SyncGoogleCalendars, style: :primary, color: :green)
       action(SyncGoogleContacts, style: :primary, color: :green)
       action(SyncGoogleDrive, style: :primary, color: :green)
     end
 
+  action AuthorizeGoogleAccount
   action SyncGoogleCalendars
   action SyncGoogleContacts
   action SyncGoogleDrive
