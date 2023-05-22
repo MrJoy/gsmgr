@@ -69,7 +69,7 @@ class GoogleFile < ApplicationRecord
 
   scope :anyone_with_link,
         lambda {
-          where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").select(:google_file_id))
+          where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").pluck(:google_file_id)) # rubocop:disable Rails/PluckInWhere
         }
 
   # rubocop:disable Style/StringHashKeys
