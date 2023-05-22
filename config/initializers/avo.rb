@@ -43,9 +43,11 @@ Avo.configure do |config|
 
   ## == Resource options ==
   # config.resource_controls_placement = :right
+  # rubocop:disable Style/StringHashKeys
   config.model_resource_mapping = {
     "GoogleFile" => "GoogleFileResource",
   }
+  # rubocop:enable Style/StringHashKeys
   # config.default_view_type = :table
   config.per_page = 50
   config.per_page_steps = [50, 100, 200]
