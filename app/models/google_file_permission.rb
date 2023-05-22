@@ -36,7 +36,8 @@ class GoogleFilePermission < ApplicationRecord
           class_name:  "GoogleFile",
           primary_key: :google_file_id,
           foreign_key: :id,
-          dependent:   nil
+          dependent:   nil,
+          inverse_of:  :permissions
 
   validates :google_id,
             presence:   true,

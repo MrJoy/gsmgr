@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Filter to show files shared to anyone who has the link.
 class AnyoneWithLink < Avo::Filters::BooleanFilter
   self.name = "Anyone With Link"
 

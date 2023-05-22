@@ -31,6 +31,8 @@
 # rubocop:enable Lint/RedundantCopDisableDirective,Layout/LineLength
 
 # Represents a Google Drive file.
+#
+# rubocop:disable Metrics/ClassLength
 class GoogleFile < ApplicationRecord
   belongs_to :account,
              class_name:  "GoogleAccount",
@@ -67,15 +69,20 @@ class GoogleFile < ApplicationRecord
 
   scope :anyone_with_link,
         lambda {
-          where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").pluck(:google_file_id))
+          where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").select(:google_file_id))
         }
 
+  # rubocop:disable Style/StringHashKeys
   ACCESS_LEVELS = {
     "reader"    => 0,
     "commenter" => 1,
     "writer"    => 2,
     "owner"     => 3,
-  }
+  }.freeze
+  # rubocop:enable Style/StringHashKeys
+
+  ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
+
   def link_permission
     permissions.where(target_type: "anyone").first
   end
@@ -106,19 +113,19 @@ class GoogleFile < ApplicationRecord
     "#{localpart}@#{domain}".downcase
   end
 
-  ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
+  # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity
   def expected_access_levels
     return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
 
     result = {}
-    root_folder.allowances.includes(contact_group: { contacts: :emails }).each do |allowance|
+    root_folder.allowances.includes(contact_group: { contacts: :emails }).find_each do |allowance|
       allowance.contact_group.contacts.each do |contact|
         lvl = ACCESS_LEVELS[allowance.access_level]
         contact.emails.each do |em|
           # We can only include GMail users...  Of course, this will miss custom domains, but we
           # can deal with that when the time arises.
           next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
-                      em.email == "davidrobillard60@yahoo.com" # Special case until I sort out WTF is up.
+                      em.email == "davidrobillard60@yahoo.com" # Special case until I get details.
 
           email = normalize_gmail_address(em.email)
 
@@ -127,22 +134,31 @@ class GoogleFile < ApplicationRecord
         end
       end
     end
-    result
+
+    result =
+      result
       .to_a
       .map { |(email, lvl)| [email, ACCESS_LEVELS_REVERSE[lvl]] }
-      .sort
+    result.sort!
+
+    result
   end
+  # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity
 
   def current_access_levels
     return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
 
-    permissions
+    result =
+      permissions
       .where(target_type: "user",
              role:        %w[reader commenter writer])
       .pluck(:email_address, :role)
-      .map { |em, role| [normalize_gmail_address(em), role] }
-      .reject { |em, _role| em == "tstwacongregation@gmail.com" }
-      .sort
+
+    result.map! { |em, role| [normalize_gmail_address(em), role] }
+    result.reject! { |em, _role| em == "tstwacongregation@gmail.com" }
+    result.sort!
+
+    result
   end
 
   def access_level_changes
@@ -158,6 +174,10 @@ class GoogleFile < ApplicationRecord
       result[email][1] = role
     end
 
-    result.to_a.select { |(_user, (from, to))| from != to }.sort
+    result = result.to_a.reject { |(_user, (from, to))| from == to }
+    result.sort!
+
+    result
   end
 end
+# rubocop:enable Metrics/ClassLength
