@@ -112,7 +112,8 @@ class GoogleFile < ApplicationRecord
         contact.emails.each do |em|
           # We can only include GMail users...  Of course, this will miss custom domains, but we
           # can deal with that when the time arises.
-          next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/
+          next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
+                      em.email == "davidrobillard60@yahoo.com" # Special case until I sort out WTF is up.
           email = normalize_gmail_address(em.email)
 
           result[email] ||= 0
