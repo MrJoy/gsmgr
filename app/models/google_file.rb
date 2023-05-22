@@ -91,6 +91,12 @@ class GoogleFile < ApplicationRecord
     root_folder&.allowances || allowances
   end
 
+  def normalize_gmail_address(email)
+    localpart, domain = email.split("@")
+    localpart.gsub!(".", "") # Google ignores dots in email addresses.
+    "#{localpart}@#{domain}".downcase
+  end
+
   ACCESS_LEVELS = {
     "reader" => 0,
     "commenter" => 1,
@@ -100,11 +106,18 @@ class GoogleFile < ApplicationRecord
   ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
   def expected_access_levels
     result = {}
-    effective_allowances.includes(contact_group: :contacts).each do |allowance|
+    allowances.includes(contact_group: { contacts: :emails }).each do |allowance|
       allowance.contact_group.contacts.each do |contact|
         lvl = ACCESS_LEVELS[allowance.access_level]
-        result[contact.primary_email] ||= 0
-        result[contact.primary_email] = lvl if lvl > result[contact.primary_email]
+        contact.emails.each do |em|
+          # We can only include GMail users...  Of course, this will miss custom domains, but we
+          # can deal with that when the time arises.
+          next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/
+          email = normalize_gmail_address(em.email)
+
+          result[email] ||= 0
+          result[email] = lvl if lvl > result[email]
+        end
       end
     end
     result
@@ -118,6 +131,7 @@ class GoogleFile < ApplicationRecord
       .where(target_type: "user",
              role:       %w[reader commenter writer])
       .pluck(:email_address, :role)
+      .map { |em, role| [normalize_gmail_address(em), role] }
       .sort
   end
 
