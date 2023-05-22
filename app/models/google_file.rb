@@ -78,6 +78,8 @@ class GoogleFile < ApplicationRecord
   end
 
   def root_folder
+    return self unless parent # If we're the root, return ourselves.
+
     root = parent
     next_parent = root
     while next_parent
@@ -106,7 +108,7 @@ class GoogleFile < ApplicationRecord
   ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
   def expected_access_levels
     result = {}
-    allowances.includes(contact_group: { contacts: :emails }).each do |allowance|
+    root_folder.allowances.includes(contact_group: { contacts: :emails }).each do |allowance|
       allowance.contact_group.contacts.each do |contact|
         lvl = ACCESS_LEVELS[allowance.access_level]
         contact.emails.each do |em|
