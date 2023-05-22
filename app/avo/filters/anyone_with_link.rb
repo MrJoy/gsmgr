@@ -1,7 +1,7 @@
 class AnyoneWithLink < Avo::Filters::BooleanFilter
   self.name = "Anyone With Link"
 
-  def apply(request, query, values)
+  def apply(_request, query, _values)
     query.anyone_with_link
   end
 

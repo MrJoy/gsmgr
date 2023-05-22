@@ -41,7 +41,7 @@ class GoogleFile < ApplicationRecord
   belongs_to :parent,
              class_name: "GoogleFile",
              inverse_of: :children,
-             dependent:   false,
+             dependent:  false,
              optional:   true,
              validate:   false
 
@@ -65,10 +65,17 @@ class GoogleFile < ApplicationRecord
             presence:   true,
             uniqueness: { scope: :google_account_id, case_sensitive: false, on: :create }
 
-  scope :anyone_with_link, -> do
-    where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").pluck(:google_file_id))
-  end
+  scope :anyone_with_link,
+        lambda {
+          where(id: GoogleFilePermission.where(google_id: "anyoneWithLink").pluck(:google_file_id))
+        }
 
+  ACCESS_LEVELS = {
+    "reader"    => 0,
+    "commenter" => 1,
+    "writer"    => 2,
+    "owner"     => 3,
+  }
   def link_permission
     permissions.where(target_type: "anyone").first
   end
@@ -95,16 +102,10 @@ class GoogleFile < ApplicationRecord
 
   def normalize_gmail_address(email)
     localpart, domain = email.split("@")
-    localpart.gsub!(".", "") # Google ignores dots in email addresses.
+    localpart.delete!(".") # Google ignores dots in email addresses.
     "#{localpart}@#{domain}".downcase
   end
 
-  ACCESS_LEVELS = {
-    "reader" => 0,
-    "commenter" => 1,
-    "writer" => 2,
-    "owner" => 3,
-  }
   ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
   def expected_access_levels
     return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
@@ -118,6 +119,7 @@ class GoogleFile < ApplicationRecord
           # can deal with that when the time arises.
           next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
                       em.email == "davidrobillard60@yahoo.com" # Special case until I sort out WTF is up.
+
           email = normalize_gmail_address(em.email)
 
           result[email] ||= 0
@@ -133,9 +135,10 @@ class GoogleFile < ApplicationRecord
 
   def current_access_levels
     return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+
     permissions
       .where(target_type: "user",
-             role:       %w[reader commenter writer])
+             role:        %w[reader commenter writer])
       .pluck(:email_address, :role)
       .map { |em, role| [normalize_gmail_address(em), role] }
       .reject { |em, _role| em == "tstwacongregation@gmail.com" }
@@ -155,6 +158,6 @@ class GoogleFile < ApplicationRecord
       result[email][1] = role
     end
 
-    result.to_a.select { |(user, (from, to))| from != to }.sort
+    result.to_a.select { |(_user, (from, to))| from != to }.sort
   end
 end

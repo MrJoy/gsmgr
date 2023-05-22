@@ -12,9 +12,9 @@ class GoogleAccountFilesResource < Avo::BaseResource
   field :name,
         as:           :text,
         readonly:     true,
-        format_using: -> (value) do
+        format_using: lambda { |_value|
           link_to(model.name, view_context.resources_google_file_path(model))
-        end
+        }
   field :owner,   as: :text,    readonly: true
   field :shared,  as: :boolean, readonly: true
   field :starred, as: :boolean, readonly: true
