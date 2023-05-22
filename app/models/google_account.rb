@@ -78,4 +78,8 @@ class GoogleAccount < ApplicationRecord
       https://www.googleapis.com/auth/contacts
     ]
   end
+
+  def normalized_email
+    @normalized_email ||= GSuite::Client.normalize_email(email)
+  end
 end

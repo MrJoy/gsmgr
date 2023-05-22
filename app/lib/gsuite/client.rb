@@ -71,6 +71,14 @@ class GSuite::Client
     exc.message.starts_with?(NOT_FOUND)
   end
 
+  def self.normalize_email(email)
+    return nil if email.nil?
+
+    localpart, domain = email.split("@")
+    localpart.delete!(".") # Google ignores dots in email addresses.
+    "#{localpart}@#{domain}".downcase
+  end
+
   def initialize(login_hint, request: nil, scopes: nil, credentials: nil, authorizer: nil)
     @login_hint  = login_hint.to_s
     @request     = request

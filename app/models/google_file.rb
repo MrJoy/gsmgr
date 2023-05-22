@@ -107,62 +107,62 @@ class GoogleFile < ApplicationRecord
     root_folder&.allowances || allowances
   end
 
-  def normalize_gmail_address(email)
-    localpart, domain = email.split("@")
-    localpart.delete!(".") # Google ignores dots in email addresses.
-    "#{localpart}@#{domain}".downcase
-  end
-
   # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity
   def expected_access_levels
-    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+    return [] if normalized_owner != account.normalized_email
 
-    result = {}
-    root_folder.allowances.includes(contact_group: { contacts: :emails }).find_each do |allowance|
-      allowance.contact_group.contacts.each do |contact|
-        lvl = ACCESS_LEVELS[allowance.access_level]
-        contact.emails.each do |em|
-          # We can only include GMail users...  Of course, this will miss custom domains, but we
-          # can deal with that when the time arises.
-          next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
-                      em.email == "davidrobillard60@yahoo.com" # Special case until I get details.
+    @expected_access_levels ||=
+      begin
+        result = {}
+        root_folder.allowances.includes(contact_group: { contacts: :emails }).find_each do |allowance|
+          allowance.contact_group.contacts.each do |contact|
+            lvl = ACCESS_LEVELS[allowance.access_level]
+            contact.emails.each do |em|
+              # We can only include GMail users...  Of course, this will miss custom domains, but we
+              # can deal with that when the time arises.
+              next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
+                          em.email == "davidrobillard60@yahoo.com" # Special case until I get details.
 
-          email = normalize_gmail_address(em.email)
+              email = GSuite::Client.normalize_email(em.email)
 
-          result[email] ||= 0
-          result[email] = lvl if lvl > result[email]
+              result[email] ||= 0
+              result[email] = lvl if lvl > result[email]
+            end
+          end
         end
+
+        result =
+          result
+          .to_a
+          .map { |(email, lvl)| [email, ACCESS_LEVELS_REVERSE[lvl]] }
+        result.sort!
+
+        result
       end
-    end
-
-    result =
-      result
-      .to_a
-      .map { |(email, lvl)| [email, ACCESS_LEVELS_REVERSE[lvl]] }
-    result.sort!
-
-    result
   end
   # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity
 
   def current_access_levels
-    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+    return [] if normalized_owner != account.normalized_email
 
-    result =
-      permissions
-      .where(target_type: "user",
-             role:        %w[reader commenter writer])
-      .pluck(:email_address, :role)
+    @current_access_levels ||=
+      begin
+        result =
+          permissions
+          .where(target_type: "user",
+                role:        %w[reader commenter writer])
+          .pluck(:email_address, :role)
 
-    result.map! { |em, role| [normalize_gmail_address(em), role] }
-    result.reject! { |em, _role| em == "tstwacongregation@gmail.com" }
-    result.sort!
+        result.map! { |em, role| [GSuite::Client.normalize_email(em), role] }
+        result.reject! { |em, _role| em == "tstwacongregation@gmail.com" }
+        result.sort!
 
-    result
+        result
+      end
   end
 
   def access_level_changes
-    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+    return [] if normalized_owner != account.normalized_email
 
     result = {}
     current_access_levels.each do |(email, role)|
@@ -178,6 +178,10 @@ class GoogleFile < ApplicationRecord
     result.sort!
 
     result
+  end
+
+  def normalized_owner
+    @normalized_owner ||= GSuite::Client.normalize_email(owner)
   end
 end
 # rubocop:enable Metrics/ClassLength

@@ -44,7 +44,7 @@ class GoogleContactSync
   end
 
   def create_new_contact!(account, contact)
-    logger.info("NEW CONTACT FOR #{account.email}: #{contact.id} (#{contact.primary_email})")
+    logger.info("NEW CONTACT FOR #{account.normalized_email}: #{contact.id} (#{contact.primary_email})")
 
     new_contact = GoogleContact.create!(
       google_account_id:       account.id,
@@ -71,8 +71,13 @@ class GoogleContactSync
 
     remote_contacts = remote_contacts.index_by(&:id)
     remote_contacts.each do |_, contact|
-      contact.primary_email = contact.primary_email&.downcase
-      contact.all_emails = contact.all_emails&.map(&:downcase)&.compact&.uniq
+      contact.primary_email = GSuite::Client.normalize_email(contact.primary_email)
+      contact.all_emails =
+        contact
+        .all_emails
+        &.map { |email| GSuite::Client.normalize_email(email) }
+        &.compact
+        &.uniq
     end
     [remote_contacts, next_sync_token]
   end
@@ -90,7 +95,7 @@ class GoogleContactSync
   end
 
   def process_contact(account, google_id, local_contact, contact)
-    logger.info("PROCESSING CONTACT FOR #{account.email}: #{google_id} " \
+    logger.info("PROCESSING CONTACT FOR #{account.normalized_email}: #{google_id} " \
                 "(#{contact.primary_email})")
 
     should_be_destroyed = !contact.primary_email && contact.all_emails.empty?
@@ -111,11 +116,13 @@ class GoogleContactSync
   end
 
   def actual_perform(account, client)
-    logger.info("REFRESHING CONTACTS FOR: #{account.email} (id=#{account.id})")
+    logger.info("REFRESHING CONTACTS FOR: #{account.normalized_email} (id=#{account.id})")
 
     remote_contacts, next_sync_token = fetch_remote_contacts(account, client)
     local_contacts = fetch_local_contacts(account, remote_contacts.keys)
 
+    logger.info("FOUND #{remote_contacts.length} CONTACTS IN GOOGLE, "\
+                "AND #{local_contacts.length} LOCALLY")
     remote_contacts.each do |google_id, contact|
       local_contact = local_contacts[google_id]
       process_contact(account, google_id, local_contact, contact)

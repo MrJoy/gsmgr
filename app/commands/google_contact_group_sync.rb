@@ -11,7 +11,7 @@ class GoogleContactGroupSync
   end
 
   def create_new_group!(account, group)
-    logger.info("NEW CONTACT GROUP FOR #{account.email}: #{group.id} (#{group.name})")
+    logger.info("NEW CONTACT GROUP FOR #{account.normalized_email}: #{group.id} (#{group.name})")
 
     GoogleContactGroup.create!(
       google_account_id: account.id,
@@ -44,7 +44,7 @@ class GoogleContactGroupSync
   end
 
   def process_group(account, google_id, local_group, group)
-    logger.info("PROCESSING CONTACT GROUP FOR #{account.email}: #{google_id} " \
+    logger.info("PROCESSING CONTACT GROUP FOR #{account.normalized_email}: #{google_id} " \
                 "(#{group.name})")
 
     should_be_destroyed = group.deleted?
@@ -65,7 +65,7 @@ class GoogleContactGroupSync
   end
 
   def actual_perform(account, client)
-    logger.info("REFRESHING CONTACT GROUPS FOR: #{account.email} (id=#{account.id})")
+    logger.info("REFRESHING CONTACT GROUPS FOR: #{account.normalized_email} (id=#{account.id})")
 
     remote_groups, next_sync_token = fetch_remote_groups(account, client)
     local_groups = fetch_local_groups(account, remote_groups.keys)
