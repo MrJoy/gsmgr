@@ -30,7 +30,7 @@
 #
 # rubocop:enable Lint/RedundantCopDisableDirective,Layout/LineLength
 
-# Represents a GSuite contact.
+# Represents a Google Drive file.
 class GoogleFile < ApplicationRecord
   belongs_to :account,
              class_name:  "GoogleAccount",
