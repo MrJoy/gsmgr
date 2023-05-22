@@ -107,6 +107,8 @@ class GoogleFile < ApplicationRecord
   }
   ACCESS_LEVELS_REVERSE = ACCESS_LEVELS.invert
   def expected_access_levels
+    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+
     result = {}
     root_folder.allowances.includes(contact_group: { contacts: :emails }).each do |allowance|
       allowance.contact_group.contacts.each do |contact|
@@ -130,15 +132,19 @@ class GoogleFile < ApplicationRecord
   end
 
   def current_access_levels
+    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
     permissions
       .where(target_type: "user",
              role:       %w[reader commenter writer])
       .pluck(:email_address, :role)
       .map { |em, role| [normalize_gmail_address(em), role] }
+      .reject { |em, _role| em == "tstwacongregation@gmail.com" }
       .sort
   end
 
   def access_level_changes
+    return [] if normalize_gmail_address(owner) != normalize_gmail_address(account.email)
+
     result = {}
     current_access_levels.each do |(email, role)|
       result[email] = [role, nil]
