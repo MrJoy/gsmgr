@@ -24,6 +24,9 @@ class GoogleContactResource < Avo::BaseResource
   field :middle_name,             as: :text, readonly: true, hide_on: %i[index]
   field :family_name,             as: :text, readonly: true, hide_on: %i[index]
 
+  field :created_at, as: :date_time, readonly: true, hide_on: %i[index]
+  field :updated_at, as: :date_time, readonly: true, hide_on: %i[index]
+
   field :account,        as: :belongs_to, readonly: true
   field :emails,         as: :has_many,   readonly: true
   field :contact_groups, as: :has_many,   readonly: true
