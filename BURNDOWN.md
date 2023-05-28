@@ -1,6 +1,6 @@
 # Burndown List
 
-1. Make sync process a background task (it takes too long to do it from the web UI)
+1. ~~Make sync process a background task (it takes too long to do it from the web UI)~~
 2. Write code to actually _apply_ needed sharing changes to Drive folders
 3. Dig through the data to understand what's up with the 461 files that appear to be over-shared
     * Some of this may just be a bug in my code!

@@ -12,15 +12,11 @@ class GoogleAccountResource < Avo::BaseResource
     lambda do
       back_button
       action(AuthorizeGoogleAccount, style: :primary, color: :green)
-      action(SyncGoogleCalendars, style: :primary, color: :green)
-      action(SyncGoogleContacts, style: :primary, color: :green)
-      action(SyncGoogleDrive, style: :primary, color: :green)
+      action(SyncGoogleAccount, style: :primary, color: :green)
     end
 
   action AuthorizeGoogleAccount
-  action SyncGoogleCalendars
-  action SyncGoogleContacts
-  action SyncGoogleDrive
+  action SyncGoogleAccount
 
   MAX_LEN = 40
   fmt_array = ->(val) { val&.join("<br>\n")&.html_safe } # rubocop:disable Rails/OutputSafety

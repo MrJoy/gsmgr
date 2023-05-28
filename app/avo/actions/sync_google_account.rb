@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Run the GoogleCalendarSync command.
-class SyncGoogleCalendars < Avo::BaseAction
-  self.name    = "Sync Calendars"
+# Fire a GoogleAccountSyncWorker job.
+class SyncGoogleAccount < Avo::BaseAction
+  self.name    = "Sync Account"
   self.visible = -> { view == :show }
 
   def handle(**args)
@@ -10,7 +10,7 @@ class SyncGoogleCalendars < Avo::BaseAction
 
     errors = []
     models.each do |model|
-      GoogleCalendarSync.call(model.id)
+      GoogleAccountSyncWorker.perform_async(model.id)
     rescue StandardError => e
       errors << "#{model.id}: #{e.message}"
     end
@@ -18,7 +18,9 @@ class SyncGoogleCalendars < Avo::BaseAction
     if errors.any?
       error("Errors:<br>\n#{errors.join("<br>\n")}".html_safe) # rubocop:disable Rails/OutputSafety
     else
-      succeed("Synced calendars.")
+      succeed("Sidekiq jobs fired.  This may take a while.  " \
+              "Check status at <a href='http://localhost:3000/sidekiq'>Sidekiq " \
+              "Dashboard</a>.".html_safe)
     end
   end
 end
