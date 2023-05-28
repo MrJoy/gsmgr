@@ -22,6 +22,13 @@ Rails.application.configure do
 
   config.rails_max_threads = ENV.fetch("RAILS_MAX_THREADS", 4).to_i
 
+  sidekiq_max_conns = ENV.fetch("SIDEKIQ_CONCURRENCY", 8).to_i
+  sidekiq_max_conns = 10 if sidekiq_max_conns < 10
+  config.sidekiq = {
+    redis_url: ENV.fetch("REDIS_SIDEKIQ_URL", "redis://127.0.0.1:6379/1"),
+    max_conns: sidekiq_max_conns,
+  }
+
   config.google = {
     client_id:             ENV.fetch("GOOGLE_CLIENT_ID", ""),
     client_secret:         ENV.fetch("GOOGLE_CLIENT_SECRET", ""),

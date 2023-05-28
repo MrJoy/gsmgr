@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   mount Avo::Engine, at: Avo.configuration.root_path
+
+  mount Sidekiq::Web, at: "/sidekiq"
 
   namespace :auth do
     get "google/authorize"
