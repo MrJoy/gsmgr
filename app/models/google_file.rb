@@ -74,6 +74,7 @@ class GoogleFile < ApplicationRecord
 
   # rubocop:disable Style/StringHashKeys
   ACCESS_LEVELS = {
+    nil         => -1,
     "reader"    => 0,
     "commenter" => 1,
     "writer"    => 2,
