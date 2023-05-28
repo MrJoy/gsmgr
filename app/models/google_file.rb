@@ -115,14 +115,15 @@ class GoogleFile < ApplicationRecord
     @expected_access_levels ||=
       begin
         result = {}
-        root_folder.allowances.includes(contact_group: { contacts: :emails }).find_each do |allowance|
+        query = root_folder.allowances.includes(contact_group: { contacts: :emails })
+        query.find_each do |allowance|
           allowance.contact_group.contacts.each do |contact|
             lvl = ACCESS_LEVELS[allowance.access_level]
             contact.emails.each do |em|
               # We can only include GMail users...  Of course, this will miss custom domains, but we
               # can deal with that when the time arises.
               next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/ ||
-                          em.email == "davidrobillard60@yahoo.com" # Special case until I get details.
+                          em.email == "davidrobillard60@yahoo.com" # Special case until I get deets.
 
               email = GSuite::Client.normalize_email(em.email)
 

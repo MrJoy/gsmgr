@@ -44,7 +44,8 @@ class GoogleContactSync
   end
 
   def create_new_contact!(account, contact)
-    logger.info("NEW CONTACT FOR #{account.normalized_email}: #{contact.id} (#{contact.primary_email})")
+    logger.info("NEW CONTACT FOR #{account.normalized_email}: #{contact.id} " \
+                "(#{contact.primary_email})")
 
     new_contact = GoogleContact.create!(
       google_account_id:       account.id,
@@ -121,7 +122,7 @@ class GoogleContactSync
     remote_contacts, next_sync_token = fetch_remote_contacts(account, client)
     local_contacts = fetch_local_contacts(account, remote_contacts.keys)
 
-    logger.info("FOUND #{remote_contacts.length} CONTACTS IN GOOGLE, "\
+    logger.info("FOUND #{remote_contacts.length} CONTACTS IN GOOGLE, " \
                 "AND #{local_contacts.length} LOCALLY")
     remote_contacts.each do |google_id, contact|
       local_contact = local_contacts[google_id]

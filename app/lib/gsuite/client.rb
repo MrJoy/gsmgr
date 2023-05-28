@@ -72,7 +72,7 @@ class GSuite::Client
   end
 
   def self.normalize_email(email)
-    return nil if email.nil?
+    return if email.nil?
 
     localpart, domain = email.split("@")
     localpart.delete!(".") # Google ignores dots in email addresses.
