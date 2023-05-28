@@ -28,7 +28,7 @@ class GoogleContact < ApplicationRecord
   belongs_to :account,
              class_name:  "GoogleAccount",
              foreign_key: :google_account_id,
-             dependent:   :destroy,
+             dependent:   nil,
              inverse_of:  :contacts
 
   # rubocop:disable Rails/HasAndBelongsToMany
