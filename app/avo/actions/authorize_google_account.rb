@@ -4,6 +4,7 @@
 class AuthorizeGoogleAccount < Avo::BaseAction
   self.name    = "Authorize"
   self.visible = -> { view == :show }
+  self.may_download_file = true
 
   def handle(**args)
     models, = args.values_at(:models)

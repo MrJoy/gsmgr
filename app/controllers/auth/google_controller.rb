@@ -81,7 +81,7 @@ class Auth::GoogleController < ApplicationController
     client = GSuite::Client.new(hint, request:, scopes: GoogleAccount.required_scopes, authorizer:)
 
     @dest = client.authorization_url
-    render("authorize", layout: nil)
+    redirect_to(client.authorization_url, allow_other_host: true)
   end
 
   def handle_error_condition!
