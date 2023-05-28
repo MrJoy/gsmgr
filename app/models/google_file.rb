@@ -151,7 +151,7 @@ class GoogleFile < ApplicationRecord
         result =
           permissions
           .where(target_type: "user",
-                role:        %w[reader commenter writer])
+                 role:        %w[reader commenter writer])
           .pluck(:email_address, :role)
 
         result.map! { |em, role| [GSuite::Client.normalize_email(em), role] }
