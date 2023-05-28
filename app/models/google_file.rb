@@ -108,7 +108,7 @@ class GoogleFile < ApplicationRecord
     root_folder&.allowances || allowances
   end
 
-  # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/MethodLength
   def expected_access_levels
     return [] if normalized_owner != account.normalized_email
 
@@ -142,7 +142,7 @@ class GoogleFile < ApplicationRecord
         result
       end
   end
-  # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/MethodLength
 
   def current_access_levels
     return [] if normalized_owner != account.normalized_email

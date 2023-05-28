@@ -20,7 +20,7 @@ class SyncGoogleAccount < Avo::BaseAction
     else
       succeed("Sidekiq jobs fired.  This may take a while.  " \
               "Check status at <a href='http://localhost:3000/sidekiq'>Sidekiq " \
-              "Dashboard</a>.".html_safe)
+              "Dashboard</a>.".html_safe) # rubocop:disable Rails/OutputSafety
     end
   end
 end
