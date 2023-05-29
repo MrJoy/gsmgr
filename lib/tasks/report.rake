@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 namespace :report do
-  task deviations: :environment do |_task, args|
+  desc "Find deviations in top-level folder permissions."
+  task folder_deviations: :environment do |_task, args|
     args       = args.to_a
     account_id = args[0]
 
