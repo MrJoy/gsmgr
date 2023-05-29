@@ -264,6 +264,24 @@ class GSuite::Client
     [incomplete_search, files.map { |file| GSuite::Raw::File.from_google(file) }]
   end
 
+  def create_permission(file_id, email_address, role)
+    check_credentials!
+
+    resp = @drive_svc.create_permission(
+      file_id,
+      Google::Apis::DriveV3::Permission.new(
+        type:          "user",
+        email_address:,
+        role:
+      ),
+      send_notification_email: false,
+      supports_all_drives:     true,
+      transfer_ownership:      false
+    )
+
+    resp&.id
+  end
+
   # N.B. We override inspect because it will normally log sensitive things, such as the API token,
   # **and refresh token**!
   def inspect
