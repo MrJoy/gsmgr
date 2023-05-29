@@ -127,7 +127,7 @@ class GoogleFile < ApplicationRecord
 
               email = GSuite::Client.normalize_email(em.email)
 
-              result[email] ||= 0
+              result[email] ||= ACCESS_LEVELS[nil]
               result[email] = lvl if lvl > result[email]
             end
           end
