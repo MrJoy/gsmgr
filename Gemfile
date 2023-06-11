@@ -48,6 +48,7 @@ gem "mail",                     "~> 2.8.1"
 gem "rack-cors",                "~> 2.0.0"
 gem "redis",                    "~> 4.8.0"
 gem "sidekiq",                  "~> 7.1.1"
+gem "sidekiq-failures",         "~> 1.0.0"
 gem "simple_command",           "~> 1.0.1"
 
 gem "avo",    "~> 2.25"

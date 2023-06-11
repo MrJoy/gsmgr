@@ -350,6 +350,8 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
+    sidekiq-failures (1.0.4)
+      sidekiq (>= 4.0.0)
     signet (0.17.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -461,6 +463,7 @@ DEPENDENCIES
   rubocop-thread_safety
   shoulda (~> 4.0.0)
   sidekiq (~> 7.1.1)
+  sidekiq-failures (~> 1.0.0)
   simple_command (~> 1.0.1)
   simplecov (~> 0.22.0)
   spring (~> 4.0)
