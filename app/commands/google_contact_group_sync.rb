@@ -80,6 +80,7 @@ class GoogleContactGroupSync
   rescue Google::Apis::ClientError => e
     if e.message.start_with?("FAILED_PRECONDITION: Sync token is expired.")
       handle_sync_token_expired!(account)
+      retry
     end
     raise
   end
