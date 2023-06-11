@@ -84,7 +84,7 @@ class GoogleCalendarSync
   end
 
   def call
-    account, client = account_and_client(@account_id)
+    account, client = account_and_client(@account_id, include_cals: true)
 
     return if account.blank?
 
