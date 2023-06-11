@@ -60,7 +60,7 @@ namespace :report do
     known_people =
       GoogleContactGroup
       .where(id: shared_contact_groups)
-      .includes(:contacts)
+      .includes(contacts: :emails)
       .map(&:contacts)
     known_people.flatten!
     known_people.map!(&:emails)
