@@ -2,8 +2,6 @@
 
 # Various helpers for Command objects.
 module CommandHelper
-  protected
-
   def client(account)
     GSuite::Client.new(account.id, scopes: account.scopes)
   end
