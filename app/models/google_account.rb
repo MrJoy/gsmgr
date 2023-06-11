@@ -30,7 +30,7 @@
 #
 class GoogleAccount < ApplicationRecord
   validates :email, presence: true
-  validates :google_id, presence: true, uniqueness: { case_sensitive: false }
+  validates :google_id, presence: true, uniqueness: { case_sensitive: false, on: :create }
 
   has_many :calendar_instances,
            class_name: "GoogleCalendarInstance",
