@@ -12,8 +12,8 @@ class GoogleContactSync
   end
 
   def add_emails(contact, all_emails)
-    all_emails.each do |email|
-      contact.emails.create!(email:)
+    all_emails.each do |raw_email|
+      contact.emails.create!(raw_email:, email: GSuite::Client.normalize_email(raw_email))
     end
   end
 
@@ -27,12 +27,25 @@ class GoogleContactSync
 
     local_contact.emails.where(email: removed_emails).destroy_all
 
-    local_contact.emails.create!(added_emails.map { |email| { email: } })
+    email_data =
+      added_emails
+      .map { |raw_email| { raw_email:, email: GSuite::Client.normalize_email(raw_email) } }
+    local_contact.emails.create!(email_data)
   end
 
-  def compute_email_sets(local_email, remote_emails)
-    added_emails   = remote_emails - local_email
-    removed_emails = local_email - remote_emails
+  def compute_email_sets(local_emails, remote_emails)
+    unmap = {}
+    local_emails.each do |email|
+      unmap[GSuite::Client.normalize_email(email)] = email
+    end
+    remote_emails.each do |email|
+      unmap[GSuite::Client.normalize_email(email)] = email
+    end
+    remote_cleansed = remote_emails.map { |email| GSuite::Client.normalize_email(email) }
+    local_cleansed  = local_emails.map { |email| GSuite::Client.normalize_email(email) }
+
+    added_emails    = remote_cleansed - local_cleansed
+    removed_emails  = local_cleansed - remote_cleansed
 
     added_emails.uniq!
     added_emails.compact!
@@ -40,7 +53,7 @@ class GoogleContactSync
     removed_emails.uniq!
     removed_emails.compact!
 
-    [added_emails, removed_emails]
+    [added_emails.map { |email| unmap[email] }, removed_emails]
   end
 
   def create_new_contact!(account, contact)
@@ -72,11 +85,9 @@ class GoogleContactSync
 
     remote_contacts = remote_contacts.index_by(&:id)
     remote_contacts.each do |_, contact|
-      contact.primary_email = GSuite::Client.normalize_email(contact.primary_email)
       contact.all_emails =
         contact
         .all_emails
-        &.map { |email| GSuite::Client.normalize_email(email) }
         &.compact
         &.uniq
     end

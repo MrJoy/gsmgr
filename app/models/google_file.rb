@@ -124,10 +124,8 @@ class GoogleFile < ApplicationRecord
               # can deal with that when the time arises.
               next unless em.email =~ /@(gmail\.com|thesatanictemple.org)$/
 
-              email = GSuite::Client.normalize_email(em.email)
-
-              result[email] ||= ACCESS_LEVELS[nil]
-              result[email] = lvl if lvl > result[email]
+              result[em.email] ||= ACCESS_LEVELS[nil]
+              result[em.email] = lvl if lvl > result[em.email]
             end
           end
         end

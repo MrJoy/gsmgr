@@ -7,6 +7,7 @@
 #
 #  id                :bigint           not null, primary key
 #  email             :string           not null
+#  raw_email         :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  google_contact_id :bigint           not null
