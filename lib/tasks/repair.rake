@@ -66,18 +66,16 @@ namespace :repair do
 
     undershared_files.each do |(fname, id, changes)|
       file = file_map[id]
+      perms = file.permissions.index_by { |pp| GSuite::Client.normalize_email(pp.email_address) }
 
       puts
       puts "File: #{fname} (#{id})"
       changes.each do |(email_address, (from, to))|
         puts "  #{email_address}: #{from || "(no access)"} -> #{to}"
-        if from && to
+        if from
           # Need to update a permission...
-          perm = file.permissions.find_by(email_address:)
+          perm = perms[email_address]
           puts "    Update required for permission ##{perm&.id}"
-        elsif from
-          # Need to delete a permission...
-          puts "    Permission ##{perm.id} needs to be deleted."
         else
           # Need to create a permission...
           permission_id = client.create_permission(file.google_id, email_address, to)
