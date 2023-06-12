@@ -89,5 +89,34 @@ namespace :repair do
         end
       end
     end
+
+    overshared_files.each do |(fname, id, changes)|
+      file = file_map[id]
+      perms = file.permissions.index_by { |pp| GSuite::Client.normalize_email(pp.email_address) }
+
+      puts
+      puts "File: #{fname} (#{id})"
+      changes.each do |(email_address, (from, to))|
+        puts "  #{email_address}: #{from || "(no access)"} -> #{to}"
+        if from && to
+          # Need to update a permission...
+          perm = perms[email_address]
+          puts "    Update required for permission ##{perm&.id}"
+        elsif from
+          # Need to delete a permission...
+          perm = perms[email_address]
+          puts "    Permission ##{perm&.id} needs to be deleted."
+          client.delete_permission(file.google_id, perm.google_id) if perm
+        else
+          puts "    WAT!"
+        end
+      rescue Google::Apis::ClientError => e
+        if e.message.include?("notFound: invalidSharingRequest")
+          puts "    Can't create permission, need to allow notifying!"
+        else
+          puts "    Can't create permission: #{e.message}"
+        end
+      end
+    end
   end
 end

@@ -282,6 +282,16 @@ class GSuite::Client
     resp&.id
   end
 
+  def delete_permission(file_id, permission_id)
+    check_credentials!
+
+    @drive_svc.delete_permission(
+      file_id,
+      permission_id,
+      supports_all_drives: true
+    )
+  end
+
   # N.B. We override inspect because it will normally log sensitive things, such as the API token,
   # **and refresh token**!
   def inspect
