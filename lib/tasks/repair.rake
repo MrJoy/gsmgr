@@ -75,7 +75,7 @@ namespace :repair do
         if from
           # Need to update a permission...
           perm = perms[email_address]
-          puts "    Update required for permission ##{perm&.id}"
+          puts "    TODO: Update required for permission ##{perm&.google_id}"
         else
           # Need to create a permission...
           permission_id = client.create_permission(file.google_id, email_address, to)
@@ -83,9 +83,9 @@ namespace :repair do
         end
       rescue Google::Apis::ClientError => e
         if e.message.include?("notFound: invalidSharingRequest")
-          puts "    Can't create permission, need to allow notifying!"
+          puts "    Can't create/modify/remove permission, need to allow notifying!"
         else
-          puts "    Can't create permission: #{e.message}"
+          puts "    Can't create/modify/remove permission: #{e.message}"
         end
       end
     end
@@ -105,16 +105,16 @@ namespace :repair do
         elsif from
           # Need to delete a permission...
           perm = perms[email_address]
-          puts "    Permission ##{perm&.id} needs to be deleted."
-          client.delete_permission(file.google_id, perm.google_id) if perm
+          client.delete_permission(file.google_id, perm.google_id)
+          puts "    Deleted permission: ##{perm&.google_id}"
         else
           puts "    WAT!"
         end
       rescue Google::Apis::ClientError => e
         if e.message.include?("notFound: invalidSharingRequest")
-          puts "    Can't create permission, need to allow notifying!"
+          puts "    Can't create/modify/remove permission, need to allow notifying!"
         else
-          puts "    Can't create permission: #{e.message}"
+          puts "    Can't create/modify/remove permission: #{e.message}"
         end
       end
     end
