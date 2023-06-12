@@ -76,7 +76,7 @@ namespace :repair do
           # Need to update a permission...
           perm = perms[email_address]
           client.delete_permission(file.google_id, perm.google_id)
-          permission_id = client.create_permission(file.google_id, email_address, to)
+          permission_id = client.create_permission(file.google_id, perm.email_address, to)
           puts "    Replaced permission ##{perm&.google_id}, new permission: #{permission_id}"
         else
           # Need to create a permission...
@@ -104,7 +104,7 @@ namespace :repair do
           # Need to update a permission...
           perm = perms[email_address]
           client.delete_permission(file.google_id, perm.google_id)
-          permission_id = client.create_permission(file.google_id, email_address, to)
+          permission_id = client.create_permission(file.google_id, perm.email_address, to)
           puts "    Replaced permission ##{perm&.google_id}, new permission: #{permission_id}"
         elsif from
           # Need to delete a permission...
