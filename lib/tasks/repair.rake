@@ -75,7 +75,9 @@ namespace :repair do
         if from
           # Need to update a permission...
           perm = perms[email_address]
-          puts "    TODO: Update required for permission ##{perm&.google_id}"
+          client.delete_permission(file.google_id, perm.google_id)
+          permission_id = client.create_permission(file.google_id, email_address, to)
+          puts "    Replaced permission ##{perm&.google_id}, new permission: #{permission_id}"
         else
           # Need to create a permission...
           permission_id = client.create_permission(file.google_id, email_address, to)
