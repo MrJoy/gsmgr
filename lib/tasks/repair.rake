@@ -11,6 +11,14 @@ namespace :repair do
     account = GoogleAccount.find(account_id)
     client = GSuite::Client.new(account.id, scopes: GoogleAccount.required_scopes)
 
+    contacts = account.contacts.includes(:emails)
+    email_map = {}
+    contacts.each do |contact|
+      contact.emails.each do |email|
+        email_map[email.email] = email.raw_email
+      end
+    end
+
     parents = { parent: :parent }
     4.times do
       parents = { parent: parents }
@@ -80,7 +88,7 @@ namespace :repair do
           puts "    Replaced permission ##{perm&.google_id}, new permission: #{permission_id}"
         else
           # Need to create a permission...
-          permission_id = client.create_permission(file.google_id, email_address, to)
+          permission_id = client.create_permission(file.google_id, email_map[email_address], to)
           puts "    Created permission: #{permission_id}"
         end
       rescue Google::Apis::ClientError => e
