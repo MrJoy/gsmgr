@@ -27,7 +27,7 @@
     "eslint-plugin-security": "^1.4.0",
     "postcss-scss": "^4.0.5",
     "sass": "^1.52.0",
-    "stylelint": "^15.0.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^32.0.0",
     "typescript": "^5.0.2",
     "unimported": "^1.19.1"
